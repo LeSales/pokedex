@@ -20,6 +20,12 @@ class _HomePageState extends State<HomePage> {
     pageController = PageController(initialPage: currentPage);
   }
 
+  setCurrentPage(page) {
+    setState(() {
+      currentPage = page;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +35,28 @@ class _HomePageState extends State<HomePage> {
           PokemonPage(),
           FavoritesPage(),
         ],
+        onPageChanged: setCurrentPage,
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentPage,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.catching_pokemon),
+            label: 'Todos',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Favoritos',
+          ),
+        ],
+        onTap: (page) {
+          pageController.animateToPage(
+            page,
+            duration: Duration(milliseconds: 400),
+            curve: Curves.ease,
+          );
+        },
+        backgroundColor: Colors.grey[100],
       ),
     );
   }
