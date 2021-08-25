@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/pages/pokemon_detail_page.dart';
 import 'package:pokedex/repositories/pokemon_repository.dart';
 
 class HomePage extends StatefulWidget {
@@ -77,6 +78,17 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  showDetails(Pokemon pokemon) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PokemonDetail(
+          pokemon: pokemon,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +119,7 @@ class _HomePageState extends State<HomePage> {
             },
             onTap: () {
               (selecionados.isEmpty)
-                  ? print("To do: go to description")
+                  ? showDetails(pokemons[pokemon])
                   : setState(() {
                       (selecionados.contains(pokemons[pokemon]))
                           ? selecionados.remove(pokemons[pokemon])
