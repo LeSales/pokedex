@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/pages/home_page.dart';
 import 'package:pokedex/repositories/favorites_repository.dart';
 import 'package:pokedex/repositories/my_pokemons_repository.dart';
+import 'package:pokedex/repositories/sighted_repository.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -10,6 +11,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => FavoritesRepository()),
         ChangeNotifierProvider(create: (context) => MyPokemonsRepository()),
+        ChangeNotifierProvider(create: (context) => SightedRepository()),
       ],
       child: MyApp(),
     ),

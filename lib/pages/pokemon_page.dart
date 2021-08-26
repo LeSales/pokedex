@@ -5,6 +5,7 @@ import 'package:pokedex/pages/pokemon_detail_page.dart';
 import 'package:pokedex/repositories/favorites_repository.dart';
 import 'package:pokedex/repositories/my_pokemons_repository.dart';
 import 'package:pokedex/repositories/pokemon_repository.dart';
+import 'package:pokedex/repositories/sighted_repository.dart';
 import 'package:provider/provider.dart';
 
 class PokemonPage extends StatefulWidget {
@@ -19,11 +20,12 @@ class _PokemonPageState extends State<PokemonPage> {
   List<Pokemon> selected = [];
   late FavoritesRepository favorites;
   late MyPokemonsRepository myPokemons;
+  late SightedRepository sighted;
 
   dynamicAppBar() {
     if (selected.isEmpty) {
       return AppBar(
-        title: Text('Pokédex'),
+        title: Text('Todos Pokémons'),
       );
     } else {
       return AppBar(
@@ -54,20 +56,13 @@ class _PokemonPageState extends State<PokemonPage> {
         children: [
           Align(
             alignment: Alignment(1, 0.75),
-            child: FloatingActionButton.extended(
+            child: FloatingActionButton(
               heroTag: null,
               onPressed: () {
                 favorites.saveAll(selected);
                 clearSelected();
               },
-              icon: Icon(Icons.star),
-              label: Text(
-                'FAVORITOS',
-                style: TextStyle(
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: Icon(Icons.star),
             ),
           ),
           Align(
@@ -86,6 +81,17 @@ class _PokemonPageState extends State<PokemonPage> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+            ),
+          ),
+          Align(
+            alignment: Alignment(1, 0.5),
+            child: FloatingActionButton(
+              heroTag: null,
+              onPressed: () {
+                sighted.saveAll(selected);
+                clearSelected();
+              },
+              child: Icon(Icons.remove_red_eye),
             ),
           )
         ],
@@ -110,6 +116,7 @@ class _PokemonPageState extends State<PokemonPage> {
   Widget build(BuildContext context) {
     favorites = context.watch<FavoritesRepository>();
     myPokemons = context.watch<MyPokemonsRepository>();
+    sighted = context.watch<SightedRepository>();
 
     return Scaffold(
       appBar: dynamicAppBar(),
@@ -142,10 +149,32 @@ class _PokemonPageState extends State<PokemonPage> {
                     Icons.catching_pokemon,
                     color: Colors.red,
                     size: 10,
+                  ),
+                if (sighted.list.contains(pokemons[pokemon]))
+                  Icon(
+                    Icons.remove_red_eye,
+                    color: Colors.black87,
+                    size: 10,
                   )
               ],
             ),
-            trailing: Text(pokemons[pokemon].type1),
+            trailing: Container(
+              margin: EdgeInsets.only(bottom: 3),
+              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                border: Border.all(
+                  color: Colors.grey.shade300,
+                ),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Text(
+                pokemons[pokemon].type1,
+                style: TextStyle(
+                  fontSize: 10,
+                ),
+              ),
+            ),
             selected: selected.contains(pokemons[pokemon]),
             selectedTileColor: Colors.red[50],
             onLongPress: () {

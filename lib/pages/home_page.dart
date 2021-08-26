@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/pages/favorites_page.dart';
 import 'package:pokedex/pages/my_pokemons_page.dart';
 import 'package:pokedex/pages/pokemon_page.dart';
+import 'package:pokedex/pages/sighted_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -36,23 +37,32 @@ class _HomePageState extends State<HomePage> {
           PokemonPage(),
           MyPokemonsPage(),
           FavoritesPage(),
+          SightedPage(),
         ],
         onPageChanged: setCurrentPage,
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentPage,
-        items: [
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: 'Todos',
+            backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.catching_pokemon),
-            label: 'Meus Pokémons',
+            label: 'Pokémons',
+            backgroundColor: Colors.red,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),
             label: 'Favoritos',
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.remove_red_eye),
+            label: 'Vistos',
+            backgroundColor: Colors.red,
           ),
         ],
         onTap: (page) {
@@ -62,7 +72,8 @@ class _HomePageState extends State<HomePage> {
             curve: Curves.ease,
           );
         },
-        backgroundColor: Colors.grey[100],
+        unselectedItemColor: Colors.grey[400],
+        selectedItemColor: Colors.white,
       ),
     );
   }
