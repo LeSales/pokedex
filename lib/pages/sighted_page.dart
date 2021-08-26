@@ -39,47 +39,44 @@ class _SightedPageState extends State<SightedPage> {
               : ListView.builder(
                   itemCount: sighted.list.length,
                   itemBuilder: (_, index) {
-                    return Column(
-                      children: [
-                        ListTile(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          leading: SizedBox(
-                            child: Image.asset(sighted.list[index].icon),
-                            width: 40,
-                          ),
-                          title: Row(
-                            children: [
-                              Text(
-                                sighted.list[index].name,
-                              ),
-                            ],
-                          ),
-                          trailing: Container(
-                            margin: EdgeInsets.only(bottom: 3),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                              ),
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Text(
-                              sighted.list[index].type1,
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            showDetails(sighted.list[index]);
-                          },
+                    return Card(
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        leading: SizedBox(
+                          child: Image.asset(sighted.list[index].icon),
+                          width: 40,
                         ),
-                        Divider(),
-                      ],
+                        title: Row(
+                          children: [
+                            Text(
+                              sighted.list[index].name,
+                            ),
+                          ],
+                        ),
+                        trailing: Container(
+                          margin: EdgeInsets.only(bottom: 3),
+                          padding:
+                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade200,
+                            border: Border.all(
+                              color: Colors.grey.shade300,
+                            ),
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          child: Text(
+                            sighted.list[index].type1,
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
+                          ),
+                        ),
+                        onTap: () {
+                          showDetails(sighted.list[index]);
+                        },
+                      ),
                     );
                   },
                 );

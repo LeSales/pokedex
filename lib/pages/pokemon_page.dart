@@ -120,83 +120,83 @@ class _PokemonPageState extends State<PokemonPage> {
 
     return Scaffold(
       appBar: dynamicAppBar(),
-      body: ListView.separated(
+      body: ListView.builder(
         itemBuilder: (BuildContext context, int pokemon) {
-          return ListTile(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12))),
-            leading: (selected.contains(pokemons[pokemon]))
-                ? CircleAvatar(
-                    child: Icon(Icons.check),
-                  )
-                : SizedBox(
-                    child: Image.asset(pokemons[pokemon].icon),
-                    width: 40,
+          return Card(
+            child: ListTile(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(12))),
+              leading: (selected.contains(pokemons[pokemon]))
+                  ? CircleAvatar(
+                      child: Icon(Icons.check),
+                    )
+                  : SizedBox(
+                      child: Image.asset(pokemons[pokemon].icon),
+                      width: 40,
+                    ),
+              title: Row(
+                children: [
+                  Text(
+                    pokemons[pokemon].name,
                   ),
-            title: Row(
-              children: [
-                Text(
-                  pokemons[pokemon].name,
-                ),
-                if (favorites.list.contains(pokemons[pokemon]))
-                  Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                    size: 10,
-                  ),
-                if (myPokemons.list.contains(pokemons[pokemon]))
-                  Icon(
-                    Icons.catching_pokemon,
-                    color: Colors.red,
-                    size: 10,
-                  ),
-                if (sighted.list.contains(pokemons[pokemon]))
-                  Icon(
-                    Icons.remove_red_eye,
-                    color: Colors.black87,
-                    size: 10,
-                  )
-              ],
-            ),
-            trailing: Container(
-              margin: EdgeInsets.only(bottom: 3),
-              padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.grey.shade200,
-                border: Border.all(
-                  color: Colors.grey.shade300,
-                ),
-                borderRadius: BorderRadius.circular(100),
+                  if (favorites.list.contains(pokemons[pokemon]))
+                    Icon(
+                      Icons.star,
+                      color: Colors.amber,
+                      size: 10,
+                    ),
+                  if (myPokemons.list.contains(pokemons[pokemon]))
+                    Icon(
+                      Icons.catching_pokemon,
+                      color: Colors.red,
+                      size: 10,
+                    ),
+                  if (sighted.list.contains(pokemons[pokemon]))
+                    Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.black87,
+                      size: 10,
+                    )
+                ],
               ),
-              child: Text(
-                pokemons[pokemon].type1,
-                style: TextStyle(
-                  fontSize: 10,
+              trailing: Container(
+                margin: EdgeInsets.only(bottom: 3),
+                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade200,
+                  border: Border.all(
+                    color: Colors.grey.shade300,
+                  ),
+                  borderRadius: BorderRadius.circular(100),
+                ),
+                child: Text(
+                  pokemons[pokemon].type1,
+                  style: TextStyle(
+                    fontSize: 10,
+                  ),
                 ),
               ),
+              selected: selected.contains(pokemons[pokemon]),
+              selectedTileColor: Colors.red[50],
+              onLongPress: () {
+                setState(() {
+                  (selected.contains(pokemons[pokemon]))
+                      ? selected.remove(pokemons[pokemon])
+                      : selected.add(pokemons[pokemon]);
+                });
+              },
+              onTap: () {
+                (selected.isEmpty)
+                    ? showDetails(pokemons[pokemon])
+                    : setState(() {
+                        (selected.contains(pokemons[pokemon]))
+                            ? selected.remove(pokemons[pokemon])
+                            : selected.add(pokemons[pokemon]);
+                      });
+              },
             ),
-            selected: selected.contains(pokemons[pokemon]),
-            selectedTileColor: Colors.red[50],
-            onLongPress: () {
-              setState(() {
-                (selected.contains(pokemons[pokemon]))
-                    ? selected.remove(pokemons[pokemon])
-                    : selected.add(pokemons[pokemon]);
-              });
-            },
-            onTap: () {
-              (selected.isEmpty)
-                  ? showDetails(pokemons[pokemon])
-                  : setState(() {
-                      (selected.contains(pokemons[pokemon]))
-                          ? selected.remove(pokemons[pokemon])
-                          : selected.add(pokemons[pokemon]);
-                    });
-            },
           );
         },
-        padding: EdgeInsets.all(16),
-        separatorBuilder: (_, __) => Divider(),
         itemCount: pokemons.length,
       ),
       floatingActionButton: showButtons(),

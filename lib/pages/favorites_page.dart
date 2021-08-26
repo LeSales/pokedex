@@ -40,46 +40,43 @@ class _FavoritesPageState extends State<FavoritesPage> {
               : ListView.builder(
                   itemCount: favorites.list.length,
                   itemBuilder: (_, index) {
-                    return Column(
-                      children: [
-                        ListTile(
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(12))),
-                            leading: SizedBox(
-                              child: Image.asset(favorites.list[index].icon),
-                              width: 40,
-                            ),
-                            title: Row(
-                              children: [
-                                Text(
-                                  favorites.list[index].name,
-                                ),
-                              ],
-                            ),
-                            trailing: Container(
-                              margin: EdgeInsets.only(bottom: 3),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 0, horizontal: 10),
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade200,
-                                border: Border.all(
-                                  color: Colors.grey.shade300,
-                                ),
-                                borderRadius: BorderRadius.circular(100),
+                    return Card(
+                      child: ListTile(
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12))),
+                          leading: SizedBox(
+                            child: Image.asset(favorites.list[index].icon),
+                            width: 40,
+                          ),
+                          title: Row(
+                            children: [
+                              Text(
+                                favorites.list[index].name,
                               ),
-                              child: Text(
-                                favorites.list[index].type1,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                ),
+                            ],
+                          ),
+                          trailing: Container(
+                            margin: EdgeInsets.only(bottom: 3),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 0, horizontal: 10),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              border: Border.all(
+                                color: Colors.grey.shade300,
+                              ),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Text(
+                              favorites.list[index].type1,
+                              style: TextStyle(
+                                fontSize: 10,
                               ),
                             ),
-                            onTap: () {
-                              showDetails(favorites.list[index]);
-                            }),
-                        Divider(),
-                      ],
+                          ),
+                          onTap: () {
+                            showDetails(favorites.list[index]);
+                          }),
                     );
                   },
                 );
