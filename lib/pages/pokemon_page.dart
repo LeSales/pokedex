@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/pages/pokemon_detail_page.dart';
+import 'package:pokedex/repositories/favorites_repository.dart';
 import 'package:pokedex/repositories/pokemon_repository.dart';
+import 'package:provider/provider.dart';
 
 class PokemonPage extends StatefulWidget {
   PokemonPage({Key? key}) : super(key: key);
@@ -13,10 +15,11 @@ class PokemonPage extends StatefulWidget {
 
 class _PokemonPageState extends State<PokemonPage> {
   final pokemons = PokemonRepository.pokemons;
-  List<Pokemon> selecionados = [];
+  List<Pokemon> selected = [];
+  late FavoritesRepository favorites;
 
   dynamicAppBar() {
-    if (selecionados.isEmpty) {
+    if (selected.isEmpty) {
       return AppBar(
         title: Text('Pokédex'),
       );
@@ -26,19 +29,25 @@ class _PokemonPageState extends State<PokemonPage> {
           icon: Icon(Icons.arrow_back),
           onPressed: () {
             setState(() {
-              selecionados = [];
+              clearSelected();
             });
           },
         ),
-        title: Text((selecionados.length == 1)
-            ? '${selecionados.length} selecionado'
-            : '${selecionados.length} selecionados'),
+        title: Text((selected.length == 1)
+            ? '${selected.length} selecionado'
+            : '${selected.length} selected'),
       );
     }
   }
 
+  clearSelected() {
+    setState(() {
+      selected = [];
+    });
+  }
+
   showButtons() {
-    if (selecionados.isNotEmpty) {
+    if (selected.isNotEmpty) {
       return Stack(
         children: [
           Align(
@@ -48,7 +57,7 @@ class _PokemonPageState extends State<PokemonPage> {
               onPressed: () {},
               icon: Icon(Icons.remove_red_eye_outlined),
               label: Text(
-                'VISTO',
+                'VIST',
                 style: TextStyle(
                   letterSpacing: 0,
                   fontWeight: FontWeight.bold,
@@ -60,7 +69,10 @@ class _PokemonPageState extends State<PokemonPage> {
             alignment: Alignment(1, 1),
             child: FloatingActionButton.extended(
               heroTag: null,
-              onPressed: () {},
+              onPressed: () {
+                favorites.saveAll(selected);
+                clearSelected();
+              },
               icon: Icon(Icons.catching_pokemon),
               label: Text(
                 'GOTCHA!',
@@ -91,6 +103,8 @@ class _PokemonPageState extends State<PokemonPage> {
 
   @override
   Widget build(BuildContext context) {
+    favorites = context.watch<FavoritesRepository>();
+
     return Scaffold(
       appBar: dynamicAppBar(),
       body: ListView.separated(
@@ -98,7 +112,7 @@ class _PokemonPageState extends State<PokemonPage> {
           return ListTile(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12))),
-            leading: (selecionados.contains(pokemons[pokemon]))
+            leading: (selected.contains(pokemons[pokemon]))
                 ? CircleAvatar(
                     child: Icon(Icons.check),
                   )
@@ -106,24 +120,36 @@ class _PokemonPageState extends State<PokemonPage> {
                     child: Image.asset(pokemons[pokemon].icon),
                     width: 40,
                   ),
-            title: Text(pokemons[pokemon].name),
+            title: Row(
+              children: [
+                Text(
+                  pokemons[pokemon].name,
+                ),
+                if (favorites.list.contains(pokemons[pokemon]))
+                  Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                    size: 10,
+                  )
+              ],
+            ),
             trailing: Text(pokemons[pokemon].type1),
-            selected: selecionados.contains(pokemons[pokemon]),
+            selected: selected.contains(pokemons[pokemon]),
             selectedTileColor: Colors.red[50],
             onLongPress: () {
               setState(() {
-                (selecionados.contains(pokemons[pokemon]))
-                    ? selecionados.remove(pokemons[pokemon])
-                    : selecionados.add(pokemons[pokemon]);
+                (selected.contains(pokemons[pokemon]))
+                    ? selected.remove(pokemons[pokemon])
+                    : selected.add(pokemons[pokemon]);
               });
             },
             onTap: () {
-              (selecionados.isEmpty)
+              (selected.isEmpty)
                   ? showDetails(pokemons[pokemon])
                   : setState(() {
-                      (selecionados.contains(pokemons[pokemon]))
-                          ? selecionados.remove(pokemons[pokemon])
-                          : selecionados.add(pokemons[pokemon]);
+                      (selected.contains(pokemons[pokemon]))
+                          ? selected.remove(pokemons[pokemon])
+                          : selected.add(pokemons[pokemon]);
                     });
             },
           );

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/pages/pokemon_detail_page.dart';
+import 'package:pokedex/repositories/favorites_repository.dart';
+import 'package:provider/provider.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -8,11 +12,56 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPageState extends State<FavoritesPage> {
+  showDetails(Pokemon pokemon) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => PokemonDetail(
+          pokemon: pokemon,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Favoritos'),
+      ),
+      body: Container(
+        child:
+            Consumer<FavoritesRepository>(builder: (context, favorites, child) {
+          return favorites.list.isEmpty
+              ? ListTile(
+                  leading: Icon(Icons.star),
+                  title: Text('Ainda não há Pokémons favoritos'),
+                )
+              : ListView.builder(
+                  itemCount: favorites.list.length,
+                  itemBuilder: (_, index) {
+                    return ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(12))),
+                        leading: SizedBox(
+                          child: Image.asset(favorites.list[index].icon),
+                          width: 40,
+                        ),
+                        title: Row(
+                          children: [
+                            Text(
+                              favorites.list[index].name,
+                            ),
+                          ],
+                        ),
+                        trailing: Text(favorites.list[index].type1),
+                        onTap: () {
+                          showDetails(favorites.list[index]);
+                        });
+                  },
+                );
+        }),
       ),
     );
   }

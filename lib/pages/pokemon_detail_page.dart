@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 
+// ignore: must_be_immutable
 class PokemonDetail extends StatefulWidget {
   Pokemon pokemon;
 

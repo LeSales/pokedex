@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/pages/home_page.dart';
+import 'package:pokedex/repositories/favorites_repository.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => FavoritesRepository())
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
