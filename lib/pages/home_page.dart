@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/pages/favorites_page.dart';
+import 'package:pokedex/pages/my_pokemons_page.dart';
 import 'package:pokedex/pages/pokemon_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -33,6 +34,7 @@ class _HomePageState extends State<HomePage> {
         controller: pageController,
         children: [
           PokemonPage(),
+          MyPokemonsPage(),
           FavoritesPage(),
         ],
         onPageChanged: setCurrentPage,
@@ -41,8 +43,12 @@ class _HomePageState extends State<HomePage> {
         currentIndex: currentPage,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.catching_pokemon),
+            icon: Icon(Icons.list),
             label: 'Todos',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.catching_pokemon),
+            label: 'Meus Pokémons',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.star),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/pages/pokemon_detail_page.dart';
 import 'package:pokedex/repositories/favorites_repository.dart';
+import 'package:pokedex/repositories/my_pokemons_repository.dart';
 import 'package:pokedex/repositories/pokemon_repository.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,7 @@ class _PokemonPageState extends State<PokemonPage> {
   final pokemons = PokemonRepository.pokemons;
   List<Pokemon> selected = [];
   late FavoritesRepository favorites;
+  late MyPokemonsRepository myPokemons;
 
   dynamicAppBar() {
     if (selected.isEmpty) {
@@ -54,10 +56,13 @@ class _PokemonPageState extends State<PokemonPage> {
             alignment: Alignment(1, 0.75),
             child: FloatingActionButton.extended(
               heroTag: null,
-              onPressed: () {},
-              icon: Icon(Icons.remove_red_eye_outlined),
+              onPressed: () {
+                favorites.saveAll(selected);
+                clearSelected();
+              },
+              icon: Icon(Icons.star),
               label: Text(
-                'VIST',
+                'FAVORITOS',
                 style: TextStyle(
                   letterSpacing: 0,
                   fontWeight: FontWeight.bold,
@@ -70,7 +75,7 @@ class _PokemonPageState extends State<PokemonPage> {
             child: FloatingActionButton.extended(
               heroTag: null,
               onPressed: () {
-                favorites.saveAll(selected);
+                myPokemons.saveAll(selected);
                 clearSelected();
               },
               icon: Icon(Icons.catching_pokemon),
@@ -104,6 +109,7 @@ class _PokemonPageState extends State<PokemonPage> {
   @override
   Widget build(BuildContext context) {
     favorites = context.watch<FavoritesRepository>();
+    myPokemons = context.watch<MyPokemonsRepository>();
 
     return Scaffold(
       appBar: dynamicAppBar(),
@@ -129,6 +135,12 @@ class _PokemonPageState extends State<PokemonPage> {
                   Icon(
                     Icons.star,
                     color: Colors.amber,
+                    size: 10,
+                  ),
+                if (myPokemons.list.contains(pokemons[pokemon]))
+                  Icon(
+                    Icons.catching_pokemon,
+                    color: Colors.red,
                     size: 10,
                   )
               ],

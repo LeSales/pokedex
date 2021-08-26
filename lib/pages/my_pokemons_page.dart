@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/pages/pokemon_detail_page.dart';
-import 'package:pokedex/repositories/favorites_repository.dart';
+import 'package:pokedex/repositories/my_pokemons_repository.dart';
 import 'package:provider/provider.dart';
 
-class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({Key? key}) : super(key: key);
+class MyPokemonsPage extends StatefulWidget {
+  const MyPokemonsPage({Key? key}) : super(key: key);
 
   @override
-  _FavoritesPageState createState() => _FavoritesPageState();
+  _MyPokemonsPageState createState() => _MyPokemonsPageState();
 }
 
-class _FavoritesPageState extends State<FavoritesPage> {
+class _MyPokemonsPageState extends State<MyPokemonsPage> {
   showDetails(Pokemon pokemon) {
     Navigator.push(
       context,
@@ -30,28 +30,28 @@ class _FavoritesPageState extends State<FavoritesPage> {
         title: Text('Favoritos'),
       ),
       body: Container(
-        child:
-            Consumer<FavoritesRepository>(builder: (context, favorites, child) {
-          return favorites.list.isEmpty
+        child: Consumer<MyPokemonsRepository>(
+            builder: (context, myPokemons, child) {
+          return myPokemons.list.isEmpty
               ? ListTile(
-                  leading: Icon(Icons.star),
-                  title: Text('Ainda não há Pokémons favoritos'),
+                  leading: Icon(Icons.catching_pokemon),
+                  title: Text('Ainda não possui Pokémons'),
                 )
               : ListView.builder(
-                  itemCount: favorites.list.length,
+                  itemCount: myPokemons.list.length,
                   itemBuilder: (_, index) {
                     return ListTile(
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(12))),
                         leading: SizedBox(
-                          child: Image.asset(favorites.list[index].icon),
+                          child: Image.asset(myPokemons.list[index].icon),
                           width: 40,
                         ),
                         title: Row(
                           children: [
                             Text(
-                              favorites.list[index].name,
+                              myPokemons.list[index].name,
                             ),
                           ],
                         ),
@@ -67,14 +67,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: Text(
-                            favorites.list[index].type1,
+                            myPokemons.list[index].type1,
                             style: TextStyle(
                               fontSize: 10,
                             ),
                           ),
                         ),
                         onTap: () {
-                          showDetails(favorites.list[index]);
+                          showDetails(myPokemons.list[index]);
                         });
                   },
                 );
