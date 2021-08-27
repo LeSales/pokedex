@@ -4,6 +4,7 @@ import 'package:pokedex/pages/favorites_page.dart';
 import 'package:pokedex/pages/my_pokemons_page.dart';
 import 'package:pokedex/pages/pokemon_page.dart';
 import 'package:pokedex/pages/sighted_page.dart';
+import 'package:pokedex/pages/user_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -38,6 +39,7 @@ class _HomePageState extends State<HomePage> {
           MyPokemonsPage(),
           FavoritesPage(),
           SightedPage(),
+          UserPage(),
         ],
         onPageChanged: setCurrentPage,
       ),
@@ -62,6 +64,11 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.remove_red_eye),
             label: 'Vistos',
+            backgroundColor: Colors.red,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Config',
             backgroundColor: Colors.red,
           ),
         ],

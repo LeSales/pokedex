@@ -18,6 +18,7 @@ class PokemonPage extends StatefulWidget {
 class _PokemonPageState extends State<PokemonPage> {
   final pokemons = PokemonRepository.pokemons;
   List<Pokemon> selected = [];
+
   late FavoritesRepository favorites;
   late MyPokemonsRepository myPokemons;
   late SightedRepository sighted;
