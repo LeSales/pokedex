@@ -5,7 +5,7 @@ import 'package:pokedex/repositories/favorites_repository.dart';
 import 'package:provider/provider.dart';
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({Key? key}) : super(key: key);
+  FavoritesPage({Key? key}) : super(key: key);
 
   @override
   _FavoritesPageState createState() => _FavoritesPageState();
@@ -30,57 +30,67 @@ class _FavoritesPageState extends State<FavoritesPage> {
         title: Text('Favoritos'),
       ),
       body: Container(
-        child:
-            Consumer<FavoritesRepository>(builder: (context, favorites, child) {
-          return favorites.list.isEmpty
-              ? ListTile(
-                  leading: Icon(Icons.star),
-                  title: Text('Ainda não há Pokémons favoritos'),
-                )
-              : ListView.builder(
-                  itemCount: favorites.list.length,
-                  itemBuilder: (_, index) {
-                    return Card(
-                      child: ListTile(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          leading: SizedBox(
-                            child: Image.asset(favorites.list[index].icon),
-                            width: 40,
-                          ),
-                          title: Row(
-                            children: [
-                              Text(
-                                favorites.list[index].name,
+        child: Consumer<FavoritesRepository>(
+          builder: (context, favorites, child) {
+            return favorites.list.isEmpty
+                ? ListTile(
+                    leading: Icon(Icons.star),
+                    title: Text('Ainda não há Pokémons favoritos'),
+                  )
+                : ListView.builder(
+                    itemCount: favorites.list.length,
+                    itemBuilder: (_, index) {
+                      return Card(
+                        child: Column(
+                          children: [
+                            ListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(12))),
+                              leading: SizedBox(
+                                child: Image.asset(favorites.list[index].icon),
+                                width: 40,
                               ),
-                            ],
-                          ),
-                          trailing: Container(
-                            margin: EdgeInsets.only(bottom: 3),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(
-                                color: Colors.grey.shade300,
+                              title: Row(
+                                children: [
+                                  Text(
+                                    favorites.list[index].name,
+                                  ),
+                                ],
                               ),
-                              borderRadius: BorderRadius.circular(100),
+                              trailing: Container(
+                                margin: EdgeInsets.only(bottom: 3),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 0, horizontal: 10),
+                                child: PopupMenuButton(
+                                  icon: Icon(Icons.more_vert),
+                                  itemBuilder: (context) => [
+                                    PopupMenuItem(
+                                      child: ListTile(
+                                        title: Text('Remover dos favoritos'),
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          Provider.of<FavoritesRepository>(
+                                            context,
+                                            listen: false,
+                                          ).remove(favorites.list[index]);
+                                        },
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                showDetails(favorites.list[index]);
+                              },
                             ),
-                            child: Text(
-                              favorites.list[index].type1,
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
-                            ),
-                          ),
-                          onTap: () {
-                            showDetails(favorites.list[index]);
-                          }),
-                    );
-                  },
-                );
-        }),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+          },
+        ),
       ),
     );
   }

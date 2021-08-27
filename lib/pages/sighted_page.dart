@@ -59,18 +59,22 @@ class _SightedPageState extends State<SightedPage> {
                           margin: EdgeInsets.only(bottom: 3),
                           padding:
                               EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade200,
-                            border: Border.all(
-                              color: Colors.grey.shade300,
-                            ),
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: Text(
-                            sighted.list[index].type1,
-                            style: TextStyle(
-                              fontSize: 10,
-                            ),
+                          child: PopupMenuButton(
+                            icon: Icon(Icons.more_vert),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                child: ListTile(
+                                  title: Text('Remover dos favoritos'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Provider.of<SightedRepository>(
+                                      context,
+                                      listen: false,
+                                    ).remove(sighted.list[index]);
+                                  },
+                                ),
+                              )
+                            ],
                           ),
                         ),
                         onTap: () {

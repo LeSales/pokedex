@@ -31,17 +31,17 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
       ),
       body: Container(
         child: Consumer<MyPokemonsRepository>(
-            builder: (context, myPokemons, child) {
-          return myPokemons.list.isEmpty
-              ? ListTile(
-                  leading: Icon(Icons.catching_pokemon),
-                  title: Text('Ainda não possui Pokémons'),
-                )
-              : ListView.builder(
-                  itemCount: myPokemons.list.length,
-                  itemBuilder: (_, index) {
-                    return Card(
-                      child: ListTile(
+          builder: (context, myPokemons, child) {
+            return myPokemons.list.isEmpty
+                ? ListTile(
+                    leading: Icon(Icons.catching_pokemon),
+                    title: Text('Ainda não possui Pokémons'),
+                  )
+                : ListView.builder(
+                    itemCount: myPokemons.list.length,
+                    itemBuilder: (_, index) {
+                      return Card(
+                        child: ListTile(
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12))),
@@ -60,27 +60,33 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                             margin: EdgeInsets.only(bottom: 3),
                             padding: EdgeInsets.symmetric(
                                 vertical: 0, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              border: Border.all(
-                                color: Colors.grey.shade300,
-                              ),
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: Text(
-                              myPokemons.list[index].type1,
-                              style: TextStyle(
-                                fontSize: 10,
-                              ),
+                            child: PopupMenuButton(
+                              icon: Icon(Icons.more_vert),
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                  child: ListTile(
+                                    title: Text('Remover dos favoritos'),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                      Provider.of<MyPokemonsRepository>(
+                                        context,
+                                        listen: false,
+                                      ).remove(myPokemons.list[index]);
+                                    },
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                           onTap: () {
                             showDetails(myPokemons.list[index]);
-                          }),
-                    );
-                  },
-                );
-        }),
+                          },
+                        ),
+                      );
+                    },
+                  );
+          },
+        ),
       ),
     );
   }
