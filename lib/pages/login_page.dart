@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   late String titulo;
   late String actionButton;
   late String toggleButton;
+  bool loading = false;
 
   @override
   void initState() {
@@ -41,18 +42,22 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   login() async {
+    setState(() => loading = true);
     try {
       await context.read<AuthService>().login(email.text, password.text);
     } on AuthException catch (e) {
+      setState(() => loading = false);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
   }
 
   register() async {
+    setState(() => loading = true);
     try {
       await context.read<AuthService>().register(email.text, password.text);
     } on AuthException catch (e) {
+      setState(() => loading = false);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(e.message)));
     }
@@ -136,18 +141,31 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.check),
-                          Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Text(
-                              actionButton,
-                              style: TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                          ),
-                        ],
+                        children: (loading)
+                            ? [
+                                Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                )
+                              ]
+                            : [
+                                Icon(Icons.check),
+                                Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Text(
+                                    actionButton,
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
                       ),
                     ),
                   ),

@@ -15,7 +15,11 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
-        ChangeNotifierProvider(create: (context) => FavoritesRepository()),
+        ChangeNotifierProvider(
+          create: (context) => FavoritesRepository(
+            auth: context.read<AuthService>(),
+          ),
+        ),
         ChangeNotifierProvider(create: (context) => MyPokemonsRepository()),
         ChangeNotifierProvider(create: (context) => SightedRepository()),
       ],
