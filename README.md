@@ -11,7 +11,8 @@ To do: preview
 To do: funcionalidades
 
 ## Desenvolvimento
-Para o desenvolvimento foram utilizados as seguintes tecnologias: </br>
+Durante o desenvolvimento foram utilizados as seguintes tecnologias: </br>
 - <a href="https://dart.dev/">Dart</a> como linguagem base e framework <a href="https://flutter.dev/">Flutter</a>
 - <a href="https://pub.dev/packages/provider">Provider</a> para o gerenciamento de estados
 - <a href="https://firebase.google.com/?hl=pt">Firebase</a> para autenticação do usuário.
+- <a href="https://firebase.google.com/?hl=pt">Cloud Firestore</a> para armazenar os dados do usuário.
