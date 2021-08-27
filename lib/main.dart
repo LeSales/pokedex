@@ -20,8 +20,16 @@ void main() async {
             auth: context.read<AuthService>(),
           ),
         ),
-        ChangeNotifierProvider(create: (context) => MyPokemonsRepository()),
-        ChangeNotifierProvider(create: (context) => SightedRepository()),
+        ChangeNotifierProvider(
+          create: (context) => MyPokemonsRepository(
+            auth: context.read<AuthService>(),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => SightedRepository(
+            auth: context.read<AuthService>(),
+          ),
+        ),
       ],
       child: MyApp(),
     ),
