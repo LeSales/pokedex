@@ -33,7 +33,7 @@ class PokemonRepository {
       legendary: false,
     ),
     Pokemon(
-      id: 1,
+      id: 9,
       icon: 'images/squirtle.png',
       name: 'Squirtle',
       type1: 'Water',

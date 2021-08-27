@@ -6,6 +6,7 @@ import 'package:pokedex/repositories/favorites_repository.dart';
 import 'package:pokedex/repositories/my_pokemons_repository.dart';
 import 'package:pokedex/repositories/pokemon_repository.dart';
 import 'package:pokedex/repositories/sighted_repository.dart';
+import 'package:pokedex/widgets/data_search.dart';
 import 'package:provider/provider.dart';
 
 class PokemonPage extends StatefulWidget {
@@ -27,6 +28,14 @@ class _PokemonPageState extends State<PokemonPage> {
     if (selected.isEmpty) {
       return AppBar(
         title: Text('Todos Pokémons'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearch());
+            },
+          ),
+        ],
       );
     } else {
       return AppBar(
@@ -126,7 +135,8 @@ class _PokemonPageState extends State<PokemonPage> {
           return Card(
             child: ListTile(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12))),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
               leading: (selected.contains(pokemons[pokemon]))
                   ? CircleAvatar(
                       child: Icon(Icons.check),
