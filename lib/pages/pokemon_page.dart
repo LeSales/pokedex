@@ -11,18 +11,17 @@ import 'package:provider/provider.dart';
 
 class PokemonPage extends StatefulWidget {
   PokemonPage({Key? key}) : super(key: key);
-
   @override
   _PokemonPageState createState() => _PokemonPageState();
 }
 
 class _PokemonPageState extends State<PokemonPage> {
-  final pokemons = PokemonRepository.pokemons;
   List<Pokemon> selected = [];
 
   late FavoritesRepository favorites;
   late MyPokemonsRepository myPokemons;
   late SightedRepository sighted;
+  List<Pokemon> pokemons = PokemonRepository.pokemons;
 
   dynamicAppBar() {
     if (selected.isEmpty) {
@@ -59,7 +58,7 @@ class _PokemonPageState extends State<PokemonPage> {
       selected = [];
     });
   }
-
+/*
   showButtons() {
     if (selected.isNotEmpty) {
       return Stack(
@@ -110,6 +109,7 @@ class _PokemonPageState extends State<PokemonPage> {
       return null;
     }
   }
+  */
 
   showDetails(Pokemon pokemon) {
     Navigator.push(
@@ -130,87 +130,99 @@ class _PokemonPageState extends State<PokemonPage> {
 
     return Scaffold(
       appBar: dynamicAppBar(),
-      body: ListView.builder(
-        itemBuilder: (BuildContext context, int pokemon) {
-          return Card(
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(12)),
-              ),
-              leading: (selected.contains(pokemons[pokemon]))
-                  ? CircleAvatar(
-                      child: Icon(Icons.check),
-                    )
-                  : SizedBox(
-                      child: Image.asset(pokemons[pokemon].icon),
-                      width: 40,
-                    ),
-              title: Row(
-                children: [
-                  Text(
-                    pokemons[pokemon].name,
-                  ),
-                  if (favorites.list.contains(pokemons[pokemon]))
-                    Icon(
-                      Icons.star,
-                      color: Colors.amber,
-                      size: 10,
-                    ),
-                  if (myPokemons.list.contains(pokemons[pokemon]))
-                    Icon(
-                      Icons.catching_pokemon,
-                      color: Colors.red,
-                      size: 10,
-                    ),
-                  if (sighted.list.contains(pokemons[pokemon]))
-                    Icon(
-                      Icons.remove_red_eye,
-                      color: Colors.black87,
-                      size: 10,
-                    )
-                ],
-              ),
-              trailing: Container(
-                margin: EdgeInsets.only(bottom: 3),
-                padding: EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  border: Border.all(
-                    color: Colors.grey.shade300,
-                  ),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Text(
-                  pokemons[pokemon].type1,
-                  style: TextStyle(
-                    fontSize: 10,
-                  ),
-                ),
-              ),
-              selected: selected.contains(pokemons[pokemon]),
-              selectedTileColor: Colors.red[50],
-              onLongPress: () {
-                setState(() {
-                  (selected.contains(pokemons[pokemon]))
-                      ? selected.remove(pokemons[pokemon])
-                      : selected.add(pokemons[pokemon]);
-                });
-              },
-              onTap: () {
-                (selected.isEmpty)
-                    ? showDetails(pokemons[pokemon])
-                    : setState(() {
-                        (selected.contains(pokemons[pokemon]))
-                            ? selected.remove(pokemons[pokemon])
-                            : selected.add(pokemons[pokemon]);
-                      });
+      body: Container(
+        child: Column(
+          children: [
+            Consumer<PokemonRepository>(
+              builder: (context, pokes, child) {
+                return pokes.list.isEmpty
+                    ? ListTile(
+                        leading: Icon(Icons.star),
+                        title: Text('Ainda não há Pokémons favoritos'),
+                      )
+                    : Expanded(
+                        child: Container(
+                          child: ListView.builder(
+                            itemCount: pokes.list.length,
+                            itemBuilder: (_, index) {
+                              return Card(
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
+                                      ),
+                                      leading: SizedBox(
+                                        child: Image.network(
+                                          pokes.list[index].icon,
+                                        ),
+                                        width: 40,
+                                      ),
+                                      title: Row(
+                                        children: [
+                                          Text(
+                                            pokes.list[index].name,
+                                          ),
+                                        ],
+                                      ),
+                                      trailing: Container(
+                                        margin: EdgeInsets.only(bottom: 3),
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 0, horizontal: 10),
+                                        child: PopupMenuButton(
+                                          icon: Icon(Icons.more_vert),
+                                          itemBuilder: (context) => [
+                                            PopupMenuItem(
+                                              child: ListTile(
+                                                title: Text('Visto'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  sighted.saveAll(
+                                                      pokes.list[index]);
+                                                },
+                                              ),
+                                            ),
+                                            PopupMenuItem(
+                                              child: ListTile(
+                                                title: Text('Favoritar'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  favorites.saveAll(
+                                                      pokes.list[index]);
+                                                },
+                                              ),
+                                            ),
+                                            PopupMenuItem(
+                                              child: ListTile(
+                                                title: Text('Gotcha!'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  myPokemons.saveAll(
+                                                      pokes.list[index]);
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      onTap: () {
+                                        showDetails(pokes.list[index]);
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      );
               },
             ),
-          );
-        },
-        itemCount: pokemons.length,
+          ],
+        ),
       ),
-      floatingActionButton: showButtons(),
+      //floatingActionButton: showButtons(),
     );
   }
 }

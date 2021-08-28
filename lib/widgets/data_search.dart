@@ -2,55 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 
 class DataSearch extends SearchDelegate<String> {
-  List<Pokemon> pokemons = [
-    new Pokemon(
-      id: 1,
-      icon: 'images/bullbasaur.png',
-      name: 'Bulbasaur',
-      type1: 'Grass',
-      type2: 'Poison',
-      total: '318',
-      hp: 45,
-      attack: 49,
-      defense: 49,
-      spAtk: 65,
-      spDef: 65,
-      speed: 45,
-      legendary: false,
-    ),
-    new Pokemon(
-      id: 4,
-      icon: 'images/charmander.png',
-      name: 'Sharmander',
-      type1: 'Fire',
-      type2: '',
-      total: '309',
-      hp: 39,
-      attack: 52,
-      defense: 43,
-      spAtk: 60,
-      spDef: 50,
-      speed: 65,
-      legendary: false,
-    ),
-    new Pokemon(
-      id: 9,
-      icon: 'images/squirtle.png',
-      name: 'Squirtle',
-      type1: 'Water',
-      type2: '',
-      total: '314',
-      hp: 44,
-      attack: 48,
-      defense: 65,
-      spAtk: 50,
-      spDef: 64,
-      speed: 43,
-      legendary: false,
-    ),
-  ];
-
-  late List<Pokemon> searchList;
+  List<Pokemon> pokemons = [];
+  late List<Pokemon> searchList = [];
 
   @override
   List<Widget> buildActions(BuildContext context) {
@@ -79,7 +32,6 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    // TODO: implement buildResults
     throw UnimplementedError();
   }
 

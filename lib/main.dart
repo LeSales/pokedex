@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/repositories/favorites_repository.dart';
 import 'package:pokedex/repositories/my_pokemons_repository.dart';
+import 'package:pokedex/repositories/pokemon_repository.dart';
 import 'package:pokedex/repositories/sighted_repository.dart';
 import 'package:pokedex/services/auth_service.dart';
 import 'package:pokedex/widgets/auth_check.dart';
@@ -15,6 +16,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => PokemonRepository()),
         ChangeNotifierProvider(
           create: (context) => FavoritesRepository(
             auth: context.read<AuthService>(),

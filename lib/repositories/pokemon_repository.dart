@@ -1,51 +1,41 @@
-import 'package:pokedex/models/pokemon.dart';
+import 'dart:convert';
+import 'dart:collection';
 
-class PokemonRepository {
-  static List<Pokemon> pokemons = [
-    Pokemon(
-      id: 1,
-      icon: 'images/bullbasaur.png',
-      name: 'Bulbasaur',
-      type1: 'Grass',
-      type2: 'Poison',
-      total: '318',
-      hp: 45,
-      attack: 49,
-      defense: 49,
-      spAtk: 65,
-      spDef: 65,
-      speed: 45,
-      legendary: false,
-    ),
-    Pokemon(
-      id: 4,
-      icon: 'images/charmander.png',
-      name: 'Charmander',
-      type1: 'Fire',
-      type2: '',
-      total: '309',
-      hp: 39,
-      attack: 52,
-      defense: 43,
-      spAtk: 60,
-      spDef: 50,
-      speed: 65,
-      legendary: false,
-    ),
-    Pokemon(
-      id: 9,
-      icon: 'images/squirtle.png',
-      name: 'Squirtle',
-      type1: 'Water',
-      type2: '',
-      total: '314',
-      hp: 44,
-      attack: 48,
-      defense: 65,
-      spAtk: 50,
-      spDef: 64,
-      speed: 43,
-      legendary: false,
-    ),
-  ];
+import 'package:flutter/cupertino.dart';
+import 'package:pokedex/models/pokemon.dart';
+import 'package:http/http.dart' as http;
+
+class PokemonRepository extends ChangeNotifier {
+  static List<Pokemon> pokemons = [];
+
+  PokemonRepository() {
+    fetchPokemonData();
+  }
+
+  UnmodifiableListView<Pokemon> get list => UnmodifiableListView(_list);
+
+  late List pokedex;
+
+  void fetchPokemonData() {
+    var url = Uri.https("raw.githubusercontent.com",
+        "/Biuni/PokemonGO-Pokedex/master/pokedex.json");
+    http.get(url).then((value) {
+      if (value.statusCode == 200) {
+        var decodedJsonData = jsonDecode(value.body);
+        pokedex = decodedJsonData['pokemon'];
+        pokedex.forEach((p) {
+          pokemons.add(
+            new Pokemon(
+              id: p['id'],
+              icon: p['img'],
+              name: p['name'],
+            ),
+          );
+        });
+        notifyListeners();
+      }
+    });
+  }
+
+  List<Pokemon> _list = pokemons;
 }
