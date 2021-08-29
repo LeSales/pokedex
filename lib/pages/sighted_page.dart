@@ -45,7 +45,14 @@ class _SightedPageState extends State<SightedPage> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(12))),
                         leading: SizedBox(
-                          child: Image.asset(sighted.list[index].icon),
+                          child: Text('icon')
+                          /*SizedBox(
+                                        child: Image.network(
+                                          pokes.list[index].icon,
+                                        ),
+                                        width: 40,
+                                      )*/
+                          , //Image.network(sighted.list[index].icon),
                           width: 40,
                         ),
                         title: Row(

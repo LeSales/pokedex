@@ -47,7 +47,14 @@ class DataSearch extends SearchDelegate<String> {
       itemBuilder: (context, index) => (suggestionList.isNotEmpty)
           ? ListTile(
               leading: SizedBox(
-                child: Image.asset(suggestionList[index].icon),
+                child: Text('icon')
+                /*SizedBox(
+                                        child: Image.network(
+                                          pokes.list[index].icon,
+                                        ),
+                                        width: 40,
+                                      )*/
+                , //Image.network(suggestionList[index].icon),
                 width: 40,
               ),
               title: Text(suggestionList[index].name),

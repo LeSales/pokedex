@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/pages/pokemon_detail_page.dart';
 import 'package:pokedex/repositories/favorites_repository.dart';
@@ -8,6 +9,7 @@ import 'package:pokedex/repositories/pokemon_repository.dart';
 import 'package:pokedex/repositories/sighted_repository.dart';
 import 'package:pokedex/widgets/data_search.dart';
 import 'package:provider/provider.dart';
+import '../graphql/queries.dart' as queries;
 
 class PokemonPage extends StatefulWidget {
   PokemonPage({Key? key}) : super(key: key);
@@ -130,98 +132,104 @@ class _PokemonPageState extends State<PokemonPage> {
 
     return Scaffold(
       appBar: dynamicAppBar(),
-      body: Container(
-        child: Column(
-          children: [
-            Consumer<PokemonRepository>(
-              builder: (context, pokes, child) {
-                return pokes.list.isEmpty
-                    ? ListTile(
-                        leading: Icon(Icons.star),
-                        title: Text('Ainda não há Pokémons favoritos'),
-                      )
-                    : Expanded(
-                        child: Container(
-                          child: ListView.builder(
-                            itemCount: pokes.list.length,
-                            itemBuilder: (_, index) {
-                              return Card(
-                                child: Column(
-                                  children: [
-                                    ListTile(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12)),
-                                      ),
-                                      leading: SizedBox(
-                                        child: Image.network(
-                                          pokes.list[index].icon,
+      body: Query(
+          options: QueryOptions(
+            document: gql(queries.gen1),
+          ),
+          builder: (QueryResult? result, {fetchMore, refetch}) {
+            return Container(
+              child: Column(
+                children: [
+                  if (result!.isLoading)
+                    Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  else
+                    Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                          itemCount: result.data!["generation"].length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(12)),
+                                    ),
+                                    leading: Text('icon')
+                                    /*SizedBox(
+                                          child: Image.network(
+                                            pokes.list[index].icon,
+                                          ),
+                                          width: 40,
+                                        )*/
+                                    ,
+                                    title: Row(
+                                      children: [
+                                        Text(
+                                          result.data!['generation'][index]
+                                              ['name'],
                                         ),
-                                        width: 40,
-                                      ),
-                                      title: Row(
-                                        children: [
-                                          Text(
-                                            pokes.list[index].name,
+                                      ],
+                                    ),
+                                    trailing: Container(
+                                      margin: EdgeInsets.only(bottom: 3),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 0, horizontal: 10),
+                                      child: PopupMenuButton(
+                                        icon: Icon(Icons.more_vert),
+                                        itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            child: ListTile(
+                                              title: Text('Visto'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                sighted.saveAll(
+                                                    result.data![index]);
+                                              },
+                                            ),
+                                          ),
+                                          PopupMenuItem(
+                                            child: ListTile(
+                                              title: Text('Favoritar'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                favorites.saveAll(
+                                                    result.data![index]);
+                                              },
+                                            ),
+                                          ),
+                                          PopupMenuItem(
+                                            child: ListTile(
+                                              title: Text('Gotcha!'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                myPokemons.saveAll(
+                                                    result.data![index]);
+                                              },
+                                            ),
                                           ),
                                         ],
                                       ),
-                                      trailing: Container(
-                                        margin: EdgeInsets.only(bottom: 3),
-                                        padding: EdgeInsets.symmetric(
-                                            vertical: 0, horizontal: 10),
-                                        child: PopupMenuButton(
-                                          icon: Icon(Icons.more_vert),
-                                          itemBuilder: (context) => [
-                                            PopupMenuItem(
-                                              child: ListTile(
-                                                title: Text('Visto'),
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                  sighted.saveAll(
-                                                      pokes.list[index]);
-                                                },
-                                              ),
-                                            ),
-                                            PopupMenuItem(
-                                              child: ListTile(
-                                                title: Text('Favoritar'),
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                  favorites.saveAll(
-                                                      pokes.list[index]);
-                                                },
-                                              ),
-                                            ),
-                                            PopupMenuItem(
-                                              child: ListTile(
-                                                title: Text('Gotcha!'),
-                                                onTap: () {
-                                                  Navigator.pop(context);
-                                                  myPokemons.saveAll(
-                                                      pokes.list[index]);
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        showDetails(pokes.list[index]);
-                                      },
                                     ),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
+                                    onTap: () {
+                                      showDetails(
+                                          result.data!['generation'][index]);
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
                         ),
-                      );
-              },
-            ),
-          ],
-        ),
-      ),
+                      ),
+                    ),
+                ],
+              ),
+            );
+          }),
       //floatingActionButton: showButtons(),
     );
   }

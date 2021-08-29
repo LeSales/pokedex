@@ -48,8 +48,8 @@ class FavoritesRepository extends ChangeNotifier {
           .collection('users/${auth.usuario!.uid}/favorites')
           .doc(pokemon.name)
           .set({
-        'id': pokemon.id,
-        'icon': pokemon.icon,
+        //'id': pokemon.id,
+        //'icon': pokemon.icon,
         'name': pokemon.name,
       });
     }

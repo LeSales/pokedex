@@ -48,8 +48,8 @@ class SightedRepository extends ChangeNotifier {
           .collection('users/${auth.usuario!.uid}/sighted')
           .doc(pokemon.name)
           .set({
-        'id': pokemon.id,
-        'icon': pokemon.icon,
+        //'id': pokemon.id,
+        // 'icon': pokemon.icon,
         'name': pokemon.name,
       });
     }
