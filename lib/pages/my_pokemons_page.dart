@@ -71,7 +71,7 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                               itemBuilder: (context) => [
                                 PopupMenuItem(
                                   child: ListTile(
-                                    title: Text('Remover dos favoritos'),
+                                    title: Text('Remover'),
                                     onTap: () {
                                       Navigator.pop(context);
                                       Provider.of<MyPokemonsRepository>(

@@ -74,7 +74,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   itemBuilder: (context) => [
                                     PopupMenuItem(
                                       child: ListTile(
-                                        title: Text('Remover dos favoritos'),
+                                        title: Text('Remover'),
                                         onTap: () {
                                           Navigator.pop(context);
                                           Provider.of<FavoritesRepository>(

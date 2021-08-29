@@ -5,7 +5,6 @@ import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/pages/pokemon_detail_page.dart';
 import 'package:pokedex/repositories/favorites_repository.dart';
 import 'package:pokedex/repositories/my_pokemons_repository.dart';
-import 'package:pokedex/repositories/pokemon_repository.dart';
 import 'package:pokedex/repositories/sighted_repository.dart';
 import 'package:pokedex/widgets/data_search.dart';
 import 'package:provider/provider.dart';
@@ -28,93 +27,11 @@ class _PokemonPageState extends State<PokemonPage> {
 
   late Pokemon poke;
 
-  dynamicAppBar() {
-    if (selected.isEmpty) {
-      return AppBar(
-        title: Text('Todos Pokémons'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(context: context, delegate: DataSearch());
-            },
-          ),
-        ],
-      );
-    } else {
-      return AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            setState(() {
-              clearSelected();
-            });
-          },
-        ),
-        title: Text((selected.length == 1)
-            ? '${selected.length} selecionado'
-            : '${selected.length} selected'),
-      );
-    }
-  }
-
   clearSelected() {
     setState(() {
       selected = [];
     });
   }
-/*
-  showButtons() {
-    if (selected.isNotEmpty) {
-      return Stack(
-        children: [
-          Align(
-            alignment: Alignment(1, 0.75),
-            child: FloatingActionButton(
-              heroTag: null,
-              onPressed: () {
-                favorites.saveAll(selected);
-                clearSelected();
-              },
-              child: Icon(Icons.star),
-            ),
-          ),
-          Align(
-            alignment: Alignment(1, 1),
-            child: FloatingActionButton.extended(
-              heroTag: null,
-              onPressed: () {
-                myPokemons.saveAll(selected);
-                clearSelected();
-              },
-              icon: Icon(Icons.catching_pokemon),
-              label: Text(
-                'GOTCHA!',
-                style: TextStyle(
-                  letterSpacing: 0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment(1, 0.5),
-            child: FloatingActionButton(
-              heroTag: null,
-              onPressed: () {
-                sighted.saveAll(selected);
-                clearSelected();
-              },
-              child: Icon(Icons.remove_red_eye),
-            ),
-          )
-        ],
-      );
-    } else {
-      return null;
-    }
-  }
-  */
 
   showDetails(Pokemon pokemon) {
     Navigator.push(
@@ -134,10 +51,20 @@ class _PokemonPageState extends State<PokemonPage> {
     sighted = context.watch<SightedRepository>();
 
     return Scaffold(
-      appBar: dynamicAppBar(),
+      appBar: AppBar(
+        title: Text('Pokédex'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearch());
+            },
+          ),
+        ],
+      ),
       body: Query(
           options: QueryOptions(
-            document: gql(queries.gen1),
+            document: gql(queries.searchByName("")),
           ),
           builder: (QueryResult? result, {fetchMore, refetch}) {
             return Container(
@@ -151,7 +78,7 @@ class _PokemonPageState extends State<PokemonPage> {
                     Expanded(
                       child: Container(
                         child: ListView.builder(
-                          itemCount: result.data!["generation"].length,
+                          itemCount: result.data!["pokemon_v2_pokemon"].length,
                           itemBuilder: (context, index) {
                             return Card(
                               child: Column(
@@ -172,8 +99,8 @@ class _PokemonPageState extends State<PokemonPage> {
                                     title: Row(
                                       children: [
                                         Text(
-                                          result.data!['generation'][index]
-                                              ['name'],
+                                          result.data!["pokemon_v2_pokemon"]
+                                              [index]['name'],
                                         ),
                                       ],
                                     ),
@@ -191,12 +118,22 @@ class _PokemonPageState extends State<PokemonPage> {
                                                 Navigator.pop(context);
                                                 sighted.saveAll(
                                                   poke = Pokemon(
-                                                    name: result
-                                                            .data!['generation']
+                                                    name: result.data![
+                                                            "pokemon_v2_pokemon"]
                                                         [index]['name'],
-                                                    id: result
-                                                            .data!['generation']
+                                                    id: result.data![
+                                                            "pokemon_v2_pokemon"]
                                                         [index]['id'],
+                                                    height: result.data![
+                                                            "pokemon_v2_pokemon"]
+                                                        [index]['height'],
+                                                    weight: result.data![
+                                                            "pokemon_v2_pokemon"]
+                                                        [index]['weight'],
+                                                    /* type: result.data![
+                                                                "pokemon_v2_pokemon"]
+                                                            [index][
+                                                        'pokemon_v2_pokemontypes'], */
                                                   ),
                                                 );
                                               },
@@ -209,12 +146,22 @@ class _PokemonPageState extends State<PokemonPage> {
                                                 Navigator.pop(context);
                                                 favorites.saveAll(
                                                   poke = Pokemon(
-                                                    name: result
-                                                            .data!['generation']
+                                                    name: result.data![
+                                                            "pokemon_v2_pokemon"]
                                                         [index]['name'],
-                                                    id: result
-                                                            .data!['generation']
+                                                    id: result.data![
+                                                            "pokemon_v2_pokemon"]
                                                         [index]['id'],
+                                                    height: result.data![
+                                                            "pokemon_v2_pokemon"]
+                                                        [index]['height'],
+                                                    weight: result.data![
+                                                            "pokemon_v2_pokemon"]
+                                                        [index]['weight'],
+                                                    /* type: result.data![
+                                                                "pokemon_v2_pokemon"]
+                                                            [index][
+                                                        'pokemon_v2_pokemontypes'], */
                                                   ),
                                                 );
                                               },
@@ -227,12 +174,22 @@ class _PokemonPageState extends State<PokemonPage> {
                                                 Navigator.pop(context);
                                                 myPokemons.saveAll(
                                                   poke = Pokemon(
-                                                    name: result
-                                                            .data!['generation']
+                                                    name: result.data![
+                                                            "pokemon_v2_pokemon"]
                                                         [index]['name'],
-                                                    id: result
-                                                            .data!['generation']
+                                                    id: result.data![
+                                                            "pokemon_v2_pokemon"]
                                                         [index]['id'],
+                                                    height: result.data![
+                                                            "pokemon_v2_pokemon"]
+                                                        [index]['height'],
+                                                    weight: result.data![
+                                                            "pokemon_v2_pokemon"]
+                                                        [index]['weight'],
+                                                    /*  type: result.data![
+                                                                "pokemon_v2_pokemon"]
+                                                            [index][
+                                                        'pokemon_v2_pokemontypes'], */
                                                   ),
                                                 );
                                               },
@@ -244,10 +201,21 @@ class _PokemonPageState extends State<PokemonPage> {
                                     onTap: () {
                                       showDetails(
                                         poke = Pokemon(
-                                          name: result.data!['generation']
-                                              [index]['name'],
-                                          id: result.data!['generation'][index]
-                                              ['id'],
+                                          name:
+                                              result.data!["pokemon_v2_pokemon"]
+                                                  [index]['name'],
+                                          id: result.data!["pokemon_v2_pokemon"]
+                                              [index]['id'],
+                                          height:
+                                              result.data!["pokemon_v2_pokemon"]
+                                                  [index]['height'],
+                                          weight:
+                                              result.data!["pokemon_v2_pokemon"]
+                                                  [index]['weight'],
+                                          /* type:
+                                              result.data!["pokemon_v2_pokemon"]
+                                                      [index]
+                                                  ['pokemon_v2_pokemontypes'], */
                                         ),
                                       );
                                     },
@@ -263,7 +231,6 @@ class _PokemonPageState extends State<PokemonPage> {
               ),
             );
           }),
-      //floatingActionButton: showButtons(),
     );
   }
 }
