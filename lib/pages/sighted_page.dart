@@ -45,7 +45,14 @@ class _SightedPageState extends State<SightedPage> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(12))),
                         leading: SizedBox(
-                          child: Image.asset(sighted.list[index].icon),
+                          child: Text('icon')
+                          /*SizedBox(
+                                        child: Image.network(
+                                          pokes.list[index].icon,
+                                        ),
+                                        width: 40,
+                                      )*/
+                          , //Image.network(sighted.list[index].icon),
                           width: 40,
                         ),
                         title: Row(
@@ -64,7 +71,7 @@ class _SightedPageState extends State<SightedPage> {
                             itemBuilder: (context) => [
                               PopupMenuItem(
                                 child: ListTile(
-                                  title: Text('Remover dos favoritos'),
+                                  title: Text('Remover'),
                                   onTap: () {
                                     Navigator.pop(context);
                                     Provider.of<SightedRepository>(
@@ -73,7 +80,7 @@ class _SightedPageState extends State<SightedPage> {
                                     ).remove(sighted.list[index]);
                                   },
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),

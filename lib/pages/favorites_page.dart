@@ -48,7 +48,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(12))),
                               leading: SizedBox(
-                                child: Image.asset(favorites.list[index].icon),
+                                child: Text('icon'),
+                                /*SizedBox(
+                                        child: Image.network(
+                                          pokes.list[index].icon,
+                                        ),
+                                        width: 40,
+                                      )*/
+                                //Image.network(favorites.list[index].icon),
                                 width: 40,
                               ),
                               title: Row(
@@ -67,7 +74,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                   itemBuilder: (context) => [
                                     PopupMenuItem(
                                       child: ListTile(
-                                        title: Text('Remover dos favoritos'),
+                                        title: Text('Remover'),
                                         onTap: () {
                                           Navigator.pop(context);
                                           Provider.of<FavoritesRepository>(

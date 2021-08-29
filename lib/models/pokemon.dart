@@ -1,31 +1,19 @@
 class Pokemon {
-  int id;
-  String icon;
   String name;
-  String type1;
-  String type2;
-  String total;
-  int hp;
-  int attack;
-  int defense;
-  int spAtk;
-  int spDef;
-  int speed;
-  bool legendary;
+  int id;
+  //String icon;
+  int height;
+  int weight;
+  // List<Object> type;
+  String? obs;
 
-  Pokemon({
-    required this.id,
-    required this.icon,
-    required this.name,
-    required this.type1,
-    required this.type2,
-    required this.total,
-    required this.hp,
-    required this.attack,
-    required this.defense,
-    required this.spAtk,
-    required this.spDef,
-    required this.speed,
-    required this.legendary,
-  });
+  Pokemon(
+      {required this.name,
+      required this.id,
+      //required this.icon,
+      required this.height,
+      required this.weight,
+      this.obs
+      //required this.type,
+      });
 }

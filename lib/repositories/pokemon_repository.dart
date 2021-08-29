@@ -1,51 +1,16 @@
+import 'package:flutter/cupertino.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:pokedex/models/pokemon.dart';
 
-class PokemonRepository {
-  static List<Pokemon> pokemons = [
-    Pokemon(
-      id: 1,
-      icon: 'images/bullbasaur.png',
-      name: 'Bulbasaur',
-      type1: 'Grass',
-      type2: 'Poison',
-      total: '318',
-      hp: 45,
-      attack: 49,
-      defense: 49,
-      spAtk: 65,
-      spDef: 65,
-      speed: 45,
-      legendary: false,
+class PokemonRepository extends ChangeNotifier {
+  static List<Pokemon> pokemons = [];
+
+  ValueNotifier<GraphQLClient> client = ValueNotifier(
+    GraphQLClient(
+      link: HttpLink('https://beta.pokeapi.co/graphql/v1beta'),
+      cache: GraphQLCache(
+        store: InMemoryStore(),
+      ),
     ),
-    Pokemon(
-      id: 4,
-      icon: 'images/charmander.png',
-      name: 'Charmander',
-      type1: 'Fire',
-      type2: '',
-      total: '309',
-      hp: 39,
-      attack: 52,
-      defense: 43,
-      spAtk: 60,
-      spDef: 50,
-      speed: 65,
-      legendary: false,
-    ),
-    Pokemon(
-      id: 9,
-      icon: 'images/squirtle.png',
-      name: 'Squirtle',
-      type1: 'Water',
-      type2: '',
-      total: '314',
-      hp: 44,
-      attack: 48,
-      defense: 65,
-      spAtk: 50,
-      spDef: 64,
-      speed: 43,
-      legendary: false,
-    ),
-  ];
+  );
 }

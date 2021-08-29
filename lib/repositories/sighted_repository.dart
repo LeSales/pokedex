@@ -41,30 +41,18 @@ class SightedRepository extends ChangeNotifier {
 
   UnmodifiableListView<Pokemon> get list => UnmodifiableListView(_list);
 
-  saveAll(List<Pokemon> pokemons) {
-    pokemons.forEach((pokemon) async {
-      if (!_list.any((current) => current.name == pokemon.name)) {
-        _list.add(pokemon);
-        await db
-            .collection('users/${auth.usuario!.uid}/sighted')
-            .doc(pokemon.name)
-            .set({
-          'id': pokemon.id,
-          'icon': pokemon.icon,
-          'name': pokemon.name,
-          'type1': pokemon.type1,
-          'type2': pokemon.type2,
-          'total': pokemon.total,
-          'hp': pokemon.hp,
-          'attack': pokemon.attack,
-          'defense': pokemon.defense,
-          'spAtk': pokemon.spAtk,
-          'spDef': pokemon.spDef,
-          'speed': pokemon.speed,
-          'legendary': pokemon.legendary,
-        });
-      }
-    });
+  saveAll(Pokemon pokemon) async {
+    if (!_list.any((current) => current.name == pokemon.name)) {
+      _list.add(pokemon);
+      await db
+          .collection('users/${auth.usuario!.uid}/sighted')
+          .doc(pokemon.name)
+          .set({
+        //'id': pokemon.id,
+        // 'icon': pokemon.icon,
+        'name': pokemon.name,
+      });
+    }
     notifyListeners();
   }
 

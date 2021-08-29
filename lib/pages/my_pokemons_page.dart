@@ -46,7 +46,13 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                               borderRadius:
                                   BorderRadius.all(Radius.circular(12))),
                           leading: SizedBox(
-                            child: Image.asset(myPokemons.list[index].icon),
+                            child: Text('icon'),
+                            /*SizedBox(
+                                        child: Image.network(
+                                          pokes.list[index].icon,
+                                        ),
+                                        width: 40,
+                                      )*/ //Image.network(myPokemons.list[index].icon),
                             width: 40,
                           ),
                           title: Row(
@@ -65,7 +71,7 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                               itemBuilder: (context) => [
                                 PopupMenuItem(
                                   child: ListTile(
-                                    title: Text('Remover dos favoritos'),
+                                    title: Text('Remover'),
                                     onTap: () {
                                       Navigator.pop(context);
                                       Provider.of<MyPokemonsRepository>(

@@ -18,6 +18,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
       appBar: AppBar(
         title: Text('${widget.pokemon.name}'),
       ),
+      body: Container(),
     );
   }
 }
