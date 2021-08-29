@@ -23,7 +23,10 @@ class _PokemonPageState extends State<PokemonPage> {
   late FavoritesRepository favorites;
   late MyPokemonsRepository myPokemons;
   late SightedRepository sighted;
-  List<Pokemon> pokemons = PokemonRepository.pokemons;
+  //List<Pokemon> pokemons = PokemonRepository.pokemons;
+  late List<Pokemon> pokemons;
+
+  late Pokemon poke;
 
   dynamicAppBar() {
     if (selected.isEmpty) {
@@ -187,7 +190,15 @@ class _PokemonPageState extends State<PokemonPage> {
                                               onTap: () {
                                                 Navigator.pop(context);
                                                 sighted.saveAll(
-                                                    result.data![index]);
+                                                  poke = Pokemon(
+                                                    name: result
+                                                            .data!['generation']
+                                                        [index]['name'],
+                                                    id: result
+                                                            .data!['generation']
+                                                        [index]['id'],
+                                                  ),
+                                                );
                                               },
                                             ),
                                           ),
@@ -197,7 +208,15 @@ class _PokemonPageState extends State<PokemonPage> {
                                               onTap: () {
                                                 Navigator.pop(context);
                                                 favorites.saveAll(
-                                                    result.data![index]);
+                                                  poke = Pokemon(
+                                                    name: result
+                                                            .data!['generation']
+                                                        [index]['name'],
+                                                    id: result
+                                                            .data!['generation']
+                                                        [index]['id'],
+                                                  ),
+                                                );
                                               },
                                             ),
                                           ),
@@ -207,7 +226,15 @@ class _PokemonPageState extends State<PokemonPage> {
                                               onTap: () {
                                                 Navigator.pop(context);
                                                 myPokemons.saveAll(
-                                                    result.data![index]);
+                                                  poke = Pokemon(
+                                                    name: result
+                                                            .data!['generation']
+                                                        [index]['name'],
+                                                    id: result
+                                                            .data!['generation']
+                                                        [index]['id'],
+                                                  ),
+                                                );
                                               },
                                             ),
                                           ),
@@ -216,7 +243,13 @@ class _PokemonPageState extends State<PokemonPage> {
                                     ),
                                     onTap: () {
                                       showDetails(
-                                          result.data!['generation'][index]);
+                                        poke = Pokemon(
+                                          name: result.data!['generation']
+                                              [index]['name'],
+                                          id: result.data!['generation'][index]
+                                              ['id'],
+                                        ),
+                                      );
                                     },
                                   ),
                                 ],

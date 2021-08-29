@@ -29,7 +29,7 @@ class PokemonRepository extends ChangeNotifier {
         pokedex.forEach((p) {
           pokemons.add(
             new Pokemon(
-              //id: p['id'],
+              id: p['id'],
               //icon: p['img'],
               name: p['name'],
             ),
