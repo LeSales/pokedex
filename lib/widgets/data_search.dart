@@ -60,144 +60,147 @@ class DataSearch extends SearchDelegate<String> {
 
     return Query(
         options: QueryOptions(
-          document: gql(queries.searchByName(query)),
+          document: gql(queries.searchByNameNonOficial(query)),
         ),
         builder: (QueryResult? result, {fetchMore, refetch}) {
           return Container(
             child: Column(
               children: [
                 if (result!.isLoading)
-                  Center(
-                    child: CircularProgressIndicator(),
+                  Column(
+                    children: [
+                      Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ],
                   )
                 else
                   Expanded(
                     child: Container(
-                      child: ListView.builder(
-                        itemCount: result.data!["pokemon_v2_pokemon"].length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            child: Column(
-                              children: [
-                                ListTile(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
-                                  ),
-                                  leading: Text('icon'),
-                                  title: Row(
+                      child: (result.data!.isEmpty)
+                          ? Container(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: ListTile(
+                                      title: Center(
+                                          child: Text(
+                                              "Nenhum Pokémon encontrado")),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: 1,
+                              itemBuilder: (context, index) {
+                                return Card(
+                                  child: Column(
                                     children: [
-                                      Text(
-                                        result.data!["pokemon_v2_pokemon"]
-                                            [index]['name'],
+                                      ListTile(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(12)),
+                                        ),
+                                        leading: Image.network(
+                                            result.data!["pokemon"]['sprites']
+                                                ['front_default']),
+                                        title: Row(
+                                          children: [
+                                            Text(
+                                              result.data!["pokemon"]['name'],
+                                            ),
+                                          ],
+                                        ),
+                                        trailing: Container(
+                                          margin: EdgeInsets.only(bottom: 3),
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 0, horizontal: 10),
+                                          child: PopupMenuButton(
+                                            icon: Icon(Icons.more_vert),
+                                            itemBuilder: (context) => [
+                                              PopupMenuItem(
+                                                child: ListTile(
+                                                  title: Text('Visto'),
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                    sighted.saveAll(
+                                                      poke = Pokemon(
+                                                        name: result.data![
+                                                            "pokemon"]['name'],
+                                                        id: result.data![
+                                                            "pokemon"]['id'],
+                                                        img: result.data![
+                                                                    "pokemon"]
+                                                                ["sprites"]
+                                                            ['front_default'],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              PopupMenuItem(
+                                                child: ListTile(
+                                                  title: Text('Favoritar'),
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                    favorites.saveAll(
+                                                      poke = Pokemon(
+                                                        name: result.data![
+                                                            "pokemon"]['name'],
+                                                        id: result.data![
+                                                            "pokemon"]['id'],
+                                                        img: result.data![
+                                                                    "pokemon"]
+                                                                ["sprites"]
+                                                            ['front_default'],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              PopupMenuItem(
+                                                child: ListTile(
+                                                  title: Text('Gotcha!'),
+                                                  onTap: () {
+                                                    Navigator.pop(context);
+                                                    myPokemons.saveAll(
+                                                      poke = Pokemon(
+                                                        name: result.data![
+                                                            "pokemon"]['name'],
+                                                        id: result.data![
+                                                            "pokemon"]['id'],
+                                                        img: result.data![
+                                                                    "pokemon"]
+                                                                ["sprites"]
+                                                            ['front_default'],
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          print("mostra pokemon");
+                                          showDetails(
+                                            poke = Pokemon(
+                                              name: result.data!["pokemon"]
+                                                  ['name'],
+                                              id: result.data!["pokemon"]['id'],
+                                              img: result.data!["pokemon"]
+                                                  ["sprites"]['front_default'],
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),
-                                  trailing: Container(
-                                    margin: EdgeInsets.only(bottom: 3),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 0, horizontal: 10),
-                                    child: PopupMenuButton(
-                                      icon: Icon(Icons.more_vert),
-                                      itemBuilder: (context) => [
-                                        PopupMenuItem(
-                                          child: ListTile(
-                                            title: Text('Visto'),
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                              sighted.saveAll(
-                                                poke = Pokemon(
-                                                  name: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['name'],
-                                                  id: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['id'],
-                                                  height: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['height'],
-                                                  weight: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['weight'],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        PopupMenuItem(
-                                          child: ListTile(
-                                            title: Text('Favoritar'),
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                              favorites.saveAll(
-                                                poke = Pokemon(
-                                                  name: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['name'],
-                                                  id: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['id'],
-                                                  height: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['height'],
-                                                  weight: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['weight'],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                        PopupMenuItem(
-                                          child: ListTile(
-                                            title: Text('Gotcha!'),
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                              myPokemons.saveAll(
-                                                poke = Pokemon(
-                                                  name: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['name'],
-                                                  id: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['id'],
-                                                  height: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['height'],
-                                                  weight: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['weight'],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    print("mostra pokemon");
-                                    showDetails(
-                                      poke = Pokemon(
-                                        name: result.data!["pokemon_v2_pokemon"]
-                                            [index]['name'],
-                                        id: result.data!["pokemon_v2_pokemon"]
-                                            [index]['id'],
-                                        height:
-                                            result.data!["pokemon_v2_pokemon"]
-                                                [index]['height'],
-                                        weight:
-                                            result.data!["pokemon_v2_pokemon"]
-                                                [index]['weight'],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ],
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                   ),
               ],
@@ -206,6 +209,23 @@ class DataSearch extends SearchDelegate<String> {
         });
   }
 
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: ListTile(
+              title: Center(child: Text("Nenhum Pokémon encontrado")),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+/* 
   @override
   Widget buildSuggestions(BuildContext context) {
     favorites = context.watch<FavoritesRepository>();
@@ -239,7 +259,7 @@ class DataSearch extends SearchDelegate<String> {
                   Expanded(
                     child: Container(
                       child: ListView.builder(
-                        itemCount: result.data!["pokemon_v2_pokemon"].length,
+                        itemCount: result.data!["pokemon"].length,
                         itemBuilder: (context, index) {
                           return Card(
                             child: Column(
@@ -253,8 +273,7 @@ class DataSearch extends SearchDelegate<String> {
                                   title: Row(
                                     children: [
                                       Text(
-                                        result.data!["pokemon_v2_pokemon"]
-                                            [index]['name'],
+                                        result.data!["pokemon"]['name'],
                                       ),
                                     ],
                                   ),
@@ -272,18 +291,13 @@ class DataSearch extends SearchDelegate<String> {
                                               Navigator.pop(context);
                                               sighted.saveAll(
                                                 poke = Pokemon(
-                                                  name: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['name'],
-                                                  id: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['id'],
-                                                  height: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['height'],
-                                                  weight: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['weight'],
+                                                  name: result.data!["pokemon"]
+                                                      ['name'],
+                                                  id: result.data!["pokemon"]
+                                                      ['id'],
+                                                  img: result.data!["pokemon"]
+                                                          ["sprites"]
+                                                      ['front_default'],
                                                 ),
                                               );
                                             },
@@ -296,18 +310,13 @@ class DataSearch extends SearchDelegate<String> {
                                               Navigator.pop(context);
                                               favorites.saveAll(
                                                 poke = Pokemon(
-                                                  name: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['name'],
-                                                  id: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['id'],
-                                                  height: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['height'],
-                                                  weight: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['weight'],
+                                                  name: result.data!["pokemon"]
+                                                      ['name'],
+                                                  id: result.data!["pokemon"]
+                                                      ['id'],
+                                                  img: result.data!["pokemon"]
+                                                          ["sprites"]
+                                                      ['front_default'],
                                                 ),
                                               );
                                             },
@@ -320,18 +329,13 @@ class DataSearch extends SearchDelegate<String> {
                                               Navigator.pop(context);
                                               myPokemons.saveAll(
                                                 poke = Pokemon(
-                                                  name: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['name'],
-                                                  id: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['id'],
-                                                  height: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['height'],
-                                                  weight: result.data![
-                                                          "pokemon_v2_pokemon"]
-                                                      [index]['weight'],
+                                                  name: result.data!["pokemon"]
+                                                      ['name'],
+                                                  id: result.data!["pokemon"]
+                                                      ['id'],
+                                                  img: result.data!["pokemon"]
+                                                          ["sprites"]
+                                                      ['front_default'],
                                                 ),
                                               );
                                             },
@@ -344,16 +348,10 @@ class DataSearch extends SearchDelegate<String> {
                                     print("mostra pokemon");
                                     showDetails(
                                       poke = Pokemon(
-                                        name: result.data!["pokemon_v2_pokemon"]
-                                            [index]['name'],
-                                        id: result.data!["pokemon_v2_pokemon"]
-                                            [index]['id'],
-                                        height:
-                                            result.data!["pokemon_v2_pokemon"]
-                                                [index]['height'],
-                                        weight:
-                                            result.data!["pokemon_v2_pokemon"]
-                                                [index]['weight'],
+                                        name: result.data!["pokemon"]['name'],
+                                        id: result.data!["pokemon"]['id'],
+                                        img: result.data!["pokemon"]["sprites"]
+                                            ['front_default'],
                                       ),
                                     );
                                   },
@@ -370,4 +368,6 @@ class DataSearch extends SearchDelegate<String> {
           );
         });
   }
+ */
+
 }

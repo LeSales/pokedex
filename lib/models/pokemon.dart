@@ -1,17 +1,15 @@
 class Pokemon {
   String name;
   int id;
-  int height;
-  int weight;
-  // List<Object> type;
+  String img;
   String? obs;
+  //List<Object> type;
 
-  Pokemon(
-      {required this.name,
-      required this.id,
-      required this.height,
-      required this.weight,
-      this.obs
-      //required this.type,
-      });
+  Pokemon({
+    required this.name,
+    required this.id,
+    required this.img,
+    //required this.type,
+    this.obs,
+  });
 }

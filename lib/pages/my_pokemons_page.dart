@@ -48,15 +48,18 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                             ),
                           ),
                           leading: SizedBox(
-                            child: Text('icon'),
-                            width: 40,
+                            child: Image.network(
+                              myPokemons.list[index].img,
+                              fit: BoxFit.contain,
+                            ),
+                            height: 200,
                           ),
-                          title: Row(
-                            children: [
-                              Text(
-                                myPokemons.list[index].name,
-                              ),
-                            ],
+                          title: Center(
+                            child: Text(
+                              myPokemons.list[index].name,
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.w600),
+                            ),
                           ),
                           trailing: Container(
                             margin: EdgeInsets.only(bottom: 3),

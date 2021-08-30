@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/pages/pokemon_detail_page.dart';
 import 'package:pokedex/repositories/favorites_repository.dart';
-import 'package:pokedex/widgets/favorites_data_search.dart';
 import 'package:provider/provider.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -28,18 +27,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pokédex'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-              showSearch(
-                context: context,
-                delegate: FavoritesDataSearch(),
-              );
-            },
-          ),
-        ],
+        title: Text('Favoritos'),
       ),
       body: Container(
         child: Consumer<FavoritesRepository>(
@@ -62,15 +50,19 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                 ),
                               ),
                               leading: SizedBox(
-                                child: Text('icon'),
-                                width: 40,
+                                child: Image.network(
+                                  favorites.list[index].img,
+                                  fit: BoxFit.contain,
+                                ),
+                                height: 200,
                               ),
-                              title: Row(
-                                children: [
-                                  Text(
-                                    favorites.list[index].name,
-                                  ),
-                                ],
+                              title: Center(
+                                child: Text(
+                                  favorites.list[index].name,
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600),
+                                ),
                               ),
                               trailing: Container(
                                 margin: EdgeInsets.only(bottom: 3),

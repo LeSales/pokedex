@@ -19,8 +19,8 @@ query ByName {
 //GraphQL api non oficial site: https://graphql-pokeapi.vercel.app/
 searchByNameNonOficial(String name) {
   return '''
-query pokemon($name: String!) {
-  pokemon(name: $name) {
+query pokemon {
+  pokemon(name: "$name") {
     id
     name
     sprites {

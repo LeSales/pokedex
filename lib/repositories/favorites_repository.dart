@@ -31,10 +31,12 @@ class FavoritesRepository extends ChangeNotifier {
 
       snapshot.docs.forEach((doc) {
         Pokemon pokemon = Pokemon(
-            name: doc.get('name'),
-            id: doc.get('id'),
-            height: doc.get('height'),
-            weight: doc.get('weight'));
+          name: doc.get('name'),
+          id: doc.get('id'),
+          img: doc.get('img'),
+          //type: doc.get('type'),
+          obs: doc.get('obs'),
+        );
         _list.add(pokemon);
         notifyListeners();
       });
@@ -52,8 +54,8 @@ class FavoritesRepository extends ChangeNotifier {
           .set({
         'name': pokemon.name,
         'id': pokemon.id,
-        'height': pokemon.height,
-        'weight': pokemon.weight,
+        'img': pokemon.img,
+        'obs': pokemon.obs,
       });
     }
     notifyListeners();

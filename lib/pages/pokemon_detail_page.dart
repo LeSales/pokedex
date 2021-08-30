@@ -30,9 +30,11 @@ class _PokemonDetailState extends State<PokemonDetail> {
               child: Card(
                 child: Center(
                   child: ListTile(
-                    title: Text(
-                      "Pokémon img",
-                      textAlign: TextAlign.center,
+                    title: SizedBox(
+                      child: Image.network(
+                        widget.pokemon.img,
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
@@ -46,14 +48,39 @@ class _PokemonDetailState extends State<PokemonDetail> {
                     Expanded(
                       flex: 2,
                       child: ListTile(
-                        leading: Text("id: " + widget.pokemon.id.toString()),
+                        leading: Text(
+                          "id: " + widget.pokemon.id.toString(),
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            fontSize: 18,
+                          ),
+                        ),
                         title: Text(
                           widget.pokemon.name,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               fontSize: 25, fontWeight: FontWeight.bold),
                         ),
-                        trailing: Text("options"),
+                        trailing: Container(
+                          margin: EdgeInsets.only(bottom: 3),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 0,
+                            horizontal: 10,
+                          ),
+                          child: PopupMenuButton(
+                            icon: Icon(Icons.more_vert),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                child: ListTile(
+                                  title: Text('Remover'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                     Expanded(
@@ -61,7 +88,13 @@ class _PokemonDetailState extends State<PokemonDetail> {
                       child: Card(
                         elevation: 2,
                         child: ListTile(
-                          leading: Text("Obs:"),
+                          leading: Text(
+                            "Obs:",
+                            style: TextStyle(
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18,
+                            ),
+                          ),
                           title: Container(
                             child: (isEditing)
                                 ? TextField(
