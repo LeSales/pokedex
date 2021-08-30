@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/pages/pokemon_detail_page.dart';
 import 'package:pokedex/repositories/favorites_repository.dart';
+import 'package:pokedex/widgets/favorites_data_search.dart';
 import 'package:provider/provider.dart';
 
 class FavoritesPage extends StatefulWidget {
@@ -27,7 +28,18 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Favoritos'),
+        title: Text('Pokédex'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: FavoritesDataSearch(),
+              );
+            },
+          ),
+        ],
       ),
       body: Container(
         child: Consumer<FavoritesRepository>(
