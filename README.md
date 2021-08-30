@@ -32,10 +32,10 @@ Após os pacotes instalados e Firebase adicionado ao projeto, é necessário ter
 ## Preview
 <p align="center">
 <img src="https://github.com/LeSales/pokedex/blob/main/img_readme/poke5.PNG?raw=true" height="400">
-<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke1.PNG?token=AD2PLQKXDCJVEHBPKLEKHMDBFUXMM" height="400">
-<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke4.PNG?token=AD2PLQOMSLMKDX645FQGYNDBFUXPA" height="400">
-<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke3.PNG?token=AD2PLQI7NGMDBJRMT2Y42UDBFUXQG" height="400">
-<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke2.PNG?token=AD2PLQJJRAKAOJ7RCXPIQGTBFUXU2" height="400">
+<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke1.PNG?token=AD2PLQLAKPDYULKXQ67KM6LBFUZZ6" height="400">
+<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke2.PNG?token=AD2PLQNEORPLANIXEVXATKLBFUZ4M" height="400">
+<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke3.PNG?token=AD2PLQMIWZM5Q6FYFORLPZLBFUZ7K" height="400">
+<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke4.PNG?token=AD2PLQLVU4OVXGOTQ4C4APDBFU2AS" height="400">
 </p>
 
 ## Funcionalidades
