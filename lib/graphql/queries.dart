@@ -16,6 +16,31 @@ query ByName {
 ''';
 }
 
+//GraphQL api non oficial site: https://graphql-pokeapi.vercel.app/
+searchByNameNonOficial(String name) {
+  return '''
+query pokemon($name: String!) {
+  pokemon(name: $name) {
+    id
+    name
+    sprites {
+      front_default
+    }
+    moves {
+      move {
+        name
+      }
+    }
+    types {
+      type {
+        name
+      }
+    }
+  }
+}
+''';
+}
+
 const gen1 = '''
   query samplePokeAPIquery {
   # Gets all the pokemon belonging to generation 1
