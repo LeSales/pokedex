@@ -29,17 +29,6 @@ Após os pacotes instalados e Firebase adicionado ao projeto, é necessário ter
 
 <h4>Deseja instalar a última versão diretamente no seu dispositivo? Baixe o <a href="https://drive.google.com/file/d/1agRAEXdlPrCr-kn29GEWEu1tHq-TOkQV/view?usp=sharing">APK</a></h4>
 
-## Preview
-<p align="center">
-<img src="https://github.com/LeSales/pokedex/blob/main/img_readme/poke5.PNG?raw=true" height="400">
-<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke1.PNG?token=AD2PLQLAKPDYULKXQ67KM6LBFUZZ6" height="400">
-<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke2.PNG?token=AD2PLQNEORPLANIXEVXATKLBFUZ4M" height="400">
- </p>
- <p align="center">
-<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke3.PNG?token=AD2PLQMIWZM5Q6FYFORLPZLBFUZ7K" height="400">
-<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke4.PNG?token=AD2PLQLVU4OVXGOTQ4C4APDBFU2AS" height="400">
-</p>
-
 ## Funcionalidades
 
 - Registro e contador de Pokémons capturados
