@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://static.wikia.nocookie.net/pokepediabr/images/3/38/Pok%C3%A9dex_Kanto.png/revision/latest?cb=20131224014121&path-prefix=pt-br">
+  <img src="https://static.wikia.nocookie.net/pokepediabr/images/3/38/Pok%C3%A9dex_Kanto.png/revision/latest?cb=20131224014121&path-prefix=pt-br" height="400">
 </p>
 
 <p align="center">
@@ -27,13 +27,23 @@ O primeiro passo após baixar ou clonar o repositório é adicionar os pacotes n
 
 Após os pacotes instalados e Firebase adicionado ao projeto, é necessário ter um dispositivo virtual ou físico para iniciar a execução do projeto com o comando `Ctrl + f5`
 
-## Preview
+<h4>Deseja instalar a última versão diretamente no seu dispositivo? Baixe o <a href="https://drive.google.com/file/d/1agRAEXdlPrCr-kn29GEWEu1tHq-TOkQV/view?usp=sharing">APK</a></h4>
 
-To do: preview
+## Preview
+<p align="center">
+<img src="https://github.com/LeSales/pokedex/blob/main/img_readme/poke5.PNG?raw=true" height="400">
+<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke1.PNG?token=AD2PLQKXDCJVEHBPKLEKHMDBFUXMM" height="400">
+<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke4.PNG?token=AD2PLQOMSLMKDX645FQGYNDBFUXPA" height="400">
+<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke3.PNG?token=AD2PLQI7NGMDBJRMT2Y42UDBFUXQG" height="400">
+<img src="https://raw.githubusercontent.com/LeSales/pokedex/main/img_readme/poke2.PNG?token=AD2PLQJJRAKAOJ7RCXPIQGTBFUXU2" height="400">
+</p>
 
 ## Funcionalidades
 
-To do: funcionalidades
+- Registro e contador de Pokémons capturados
+- Registro e contador de Pokémons vistos
+- Registro e contador de Pokémons favoritos
+- Autenticação, possibilitando acessar sua pokedéx de multiplos dispositivos, compartilhando um mesmo conjunto de Pokémons 
 
 ## Desenvolvimento
 Durante o desenvolvimento foram utilizados as seguintes tecnologias: </br>
@@ -41,4 +51,4 @@ Durante o desenvolvimento foram utilizados as seguintes tecnologias: </br>
 - <a href="https://pub.dev/packages/provider">Provider</a> para o gerenciamento de estados
 - <a href="https://firebase.google.com/?hl=pt">Firebase</a> para autenticação do usuário.
 - <a href="https://firebase.google.com/?hl=pt">Cloud Firestore</a> para armazenar os dados do usuário na nuvem.
-- <a href="https://pub.dev/packages/graphql_flutter">GraphQL<a/> para consumir os dados da <a href="https://pokeapi.co/">API</a> oficial do <a href="https://www.pokemon.com/br/">Pokémon<a/>
+- <a href="https://pub.dev/packages/graphql_flutter">GraphQL<a/> para consumir os dados da <a href="https://pokeapi.co/">API</a> oficial do <a href="https://www.pokemon.com/br/">Pokémon<a/> (<a href="https://graphql-pokeapi.vercel.app/">API</a> alternativa)
