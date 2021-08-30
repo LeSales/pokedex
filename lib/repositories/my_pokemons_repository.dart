@@ -1,10 +1,8 @@
 import 'dart:collection';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pokedex/databases/db_firestore.dart';
 import 'package:pokedex/models/pokemon.dart';
-import 'package:pokedex/repositories/pokemon_repository.dart';
 import 'package:pokedex/services/auth_service.dart';
 
 class MyPokemonsRepository extends ChangeNotifier {
@@ -31,8 +29,11 @@ class MyPokemonsRepository extends ChangeNotifier {
           await db.collection('users/${auth.usuario!.uid}/mypokemons').get();
 
       snapshot.docs.forEach((doc) {
-        Pokemon pokemon = PokemonRepository.pokemons
-            .firstWhere((pokemon) => pokemon.name == doc.get(['name']));
+        Pokemon pokemon = Pokemon(
+            name: doc.get('name'),
+            id: doc.get('id'),
+            height: doc.get('height'),
+            weight: doc.get('weight'));
         _list.add(pokemon);
         notifyListeners();
       });
@@ -48,9 +49,10 @@ class MyPokemonsRepository extends ChangeNotifier {
           .collection('users/${auth.usuario!.uid}/mypokemons')
           .doc(pokemon.name)
           .set({
-        //'id': pokemon.id,
-        //'icon': pokemon.icon,
         'name': pokemon.name,
+        'id': pokemon.id,
+        'height': pokemon.height,
+        'weight': pokemon.weight,
       });
     }
     notifyListeners();

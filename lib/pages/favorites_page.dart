@@ -45,17 +45,12 @@ class _FavoritesPageState extends State<FavoritesPage> {
                           children: [
                             ListTile(
                               shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(12))),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(12),
+                                ),
+                              ),
                               leading: SizedBox(
                                 child: Text('icon'),
-                                /*SizedBox(
-                                        child: Image.network(
-                                          pokes.list[index].icon,
-                                        ),
-                                        width: 40,
-                                      )*/
-                                //Image.network(favorites.list[index].icon),
                                 width: 40,
                               ),
                               title: Row(
@@ -68,7 +63,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               trailing: Container(
                                 margin: EdgeInsets.only(bottom: 3),
                                 padding: EdgeInsets.symmetric(
-                                    vertical: 0, horizontal: 10),
+                                  vertical: 0,
+                                  horizontal: 10,
+                                ),
                                 child: PopupMenuButton(
                                   icon: Icon(Icons.more_vert),
                                   itemBuilder: (context) => [

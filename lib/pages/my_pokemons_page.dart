@@ -43,16 +43,12 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                       return Card(
                         child: ListTile(
                           shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(12),
+                            ),
+                          ),
                           leading: SizedBox(
                             child: Text('icon'),
-                            /*SizedBox(
-                                        child: Image.network(
-                                          pokes.list[index].icon,
-                                        ),
-                                        width: 40,
-                                      )*/ //Image.network(myPokemons.list[index].icon),
                             width: 40,
                           ),
                           title: Row(
