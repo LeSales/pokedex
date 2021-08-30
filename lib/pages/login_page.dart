@@ -15,10 +15,10 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
 
   bool isLogin = true;
+  bool loading = false;
   late String titulo;
   late String actionButton;
   late String toggleButton;
-  bool loading = false;
 
   @override
   void initState() {
