@@ -25,7 +25,7 @@ O primeiro passo após baixar ou clonar o repositório é adicionar os pacotes n
 ```
 > Obs: É necessário a configuração do banco de dados <a href="https://firebase.google.com/?hl=pt">Firebase</a>. Para isso basta seguir os <a href="https://firebase.google.com/docs/guides?hl=pt-br">Primeiros passos no Firebase"</a> antes de proseguir com a execução do projeto.
 
-Após os pacotes instalados e Firebase adicionado ao projeto, é necessário ter um dispositivo virtual ou físico para iniciar a 
+Após os pacotes instalados e Firebase adicionado ao projeto, é necessário ter um dispositivo virtual ou físico para iniciar a execução do projeto com o comando `Ctrl + f5`
 
 ## Preview
 
