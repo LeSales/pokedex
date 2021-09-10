@@ -60,7 +60,7 @@ class DataSearch extends SearchDelegate<String> {
 
     return Query(
         options: QueryOptions(
-          document: gql(queries.searchByNameNonOficial(query)),
+          document: gql(queries.searchByName(query)),
         ),
         builder: (QueryResult? result, {fetchMore, refetch}) {
           return Container(
@@ -93,7 +93,7 @@ class DataSearch extends SearchDelegate<String> {
                               ),
                             )
                           : ListView.builder(
-                              itemCount: 1,
+                              itemCount: result.data!.length,
                               itemBuilder: (context, index) {
                                 return Card(
                                   child: Column(
@@ -103,13 +103,15 @@ class DataSearch extends SearchDelegate<String> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(12)),
                                         ),
-                                        leading: Image.network(
-                                            result.data!["pokemon"]['sprites']
-                                                ['front_default']),
+                                        leading: (result.data!.isNotEmpty)
+                                            ? Image.network(
+                                                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png")
+                                            : Icon(Icons.search_off),
                                         title: Row(
                                           children: [
                                             Text(
-                                              result.data!["pokemon"]['name'],
+                                              result.data!["pokemon_v2_pokemon"]
+                                                  [index]['name'],
                                             ),
                                           ],
                                         ),
@@ -128,13 +130,13 @@ class DataSearch extends SearchDelegate<String> {
                                                     sighted.saveAll(
                                                       poke = Pokemon(
                                                         name: result.data![
-                                                            "pokemon"]['name'],
+                                                                "pokemon_v2_pokemon"]
+                                                            [index]['name'],
                                                         id: result.data![
-                                                            "pokemon"]['id'],
-                                                        img: result.data![
-                                                                    "pokemon"]
-                                                                ["sprites"]
-                                                            ['front_default'],
+                                                                "pokemon_v2_pokemon"]
+                                                            [index]['id'],
+                                                        img:
+                                                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
                                                       ),
                                                     );
                                                   },
@@ -148,13 +150,13 @@ class DataSearch extends SearchDelegate<String> {
                                                     favorites.saveAll(
                                                       poke = Pokemon(
                                                         name: result.data![
-                                                            "pokemon"]['name'],
+                                                                "pokemon_v2_pokemon"]
+                                                            [index]['name'],
                                                         id: result.data![
-                                                            "pokemon"]['id'],
-                                                        img: result.data![
-                                                                    "pokemon"]
-                                                                ["sprites"]
-                                                            ['front_default'],
+                                                                "pokemon_v2_pokemon"]
+                                                            [index]['id'],
+                                                        img:
+                                                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
                                                       ),
                                                     );
                                                   },
@@ -168,13 +170,13 @@ class DataSearch extends SearchDelegate<String> {
                                                     myPokemons.saveAll(
                                                       poke = Pokemon(
                                                         name: result.data![
-                                                            "pokemon"]['name'],
+                                                                "pokemon_v2_pokemon"]
+                                                            [index]['name'],
                                                         id: result.data![
-                                                            "pokemon"]['id'],
-                                                        img: result.data![
-                                                                    "pokemon"]
-                                                                ["sprites"]
-                                                            ['front_default'],
+                                                                "pokemon_v2_pokemon"]
+                                                            [index]['id'],
+                                                        img:
+                                                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
                                                       ),
                                                     );
                                                   },
@@ -187,11 +189,14 @@ class DataSearch extends SearchDelegate<String> {
                                           print("mostra pokemon");
                                           showDetails(
                                             poke = Pokemon(
-                                              name: result.data!["pokemon"]
-                                                  ['name'],
-                                              id: result.data!["pokemon"]['id'],
-                                              img: result.data!["pokemon"]
-                                                  ["sprites"]['front_default'],
+                                              name: result.data![
+                                                      "pokemon_v2_pokemon"]
+                                                  [index]['name'],
+                                              id: result.data![
+                                                      "pokemon_v2_pokemon"]
+                                                  [index]['id'],
+                                              img:
+                                                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
                                             ),
                                           );
                                         },
