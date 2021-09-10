@@ -93,7 +93,8 @@ class DataSearch extends SearchDelegate<String> {
                               ),
                             )
                           : ListView.builder(
-                              itemCount: result.data!.length,
+                              itemCount:
+                                  result.data!["pokemon_v2_pokemon"].length,
                               itemBuilder: (context, index) {
                                 return Card(
                                   child: Column(
