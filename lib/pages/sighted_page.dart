@@ -39,52 +39,62 @@ class _SightedPageState extends State<SightedPage> {
               : ListView.builder(
                   itemCount: sighted.list.length,
                   itemBuilder: (_, index) {
-                    return Card(
-                      child: ListTile(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(12),
-                          ),
-                        ),
-                        leading: SizedBox(
-                          child: Image.network(
-                            sighted.list[index].img,
-                            fit: BoxFit.contain,
-                          ),
-                          height: 200,
-                        ),
-                        title: Center(
-                          child: Text(
-                            sighted.list[index].name,
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        trailing: Container(
-                          margin: EdgeInsets.only(bottom: 3),
-                          padding:
-                              EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-                          child: PopupMenuButton(
-                            icon: Icon(Icons.more_vert),
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                child: ListTile(
-                                  title: Text('Remover'),
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    Provider.of<SightedRepository>(
-                                      context,
-                                      listen: false,
-                                    ).remove(sighted.list[index]);
-                                  },
+                    return GestureDetector(
+                      onTap: () {
+                        showDetails(sighted.list[index]);
+                      },
+                      child: Container(
+                        margin: EdgeInsets.all(5),
+                        child: Stack(
+                          children: <Widget>[
+                            Card(
+                              elevation: 3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Row(
+                                  children: <Widget>[
+                                    Image.network(
+                                      sighted.list[index].img,
+                                    ),
+                                    Column(
+                                      children: [
+                                        Text(
+                                          sighted.list[index].name,
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ],
+                                    ),
+                                    Spacer(),
+                                    PopupMenuButton(
+                                      icon: Icon(Icons.more_vert),
+                                      itemBuilder: (context) => [
+                                        PopupMenuItem(
+                                          child: ListTile(
+                                            title: Text('Remover'),
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              Provider.of<SightedRepository>(
+                                                context,
+                                                listen: false,
+                                              ).remove(sighted.list[index]);
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            )
+                          ],
                         ),
-                        onTap: () {
-                          showDetails(sighted.list[index]);
-                        },
                       ),
                     );
                   },

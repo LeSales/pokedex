@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
 import 'package:pokedex/pages/pokemon_detail_page.dart';
@@ -40,59 +41,63 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 : ListView.builder(
                     itemCount: favorites.list.length,
                     itemBuilder: (_, index) {
-                      return Card(
-                        child: Column(
-                          children: [
-                            ListTile(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(12),
+                      return GestureDetector(
+                        onTap: () {
+                          showDetails(favorites.list[index]);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          child: Stack(
+                            children: <Widget>[
+                              Card(
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
-                              ),
-                              leading: SizedBox(
-                                child: Image.network(
-                                  favorites.list[index].img,
-                                  fit: BoxFit.contain,
-                                ),
-                                height: 200,
-                              ),
-                              title: Center(
-                                child: Text(
-                                  favorites.list[index].name,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ),
-                              trailing: Container(
-                                margin: EdgeInsets.only(bottom: 3),
-                                padding: EdgeInsets.symmetric(
-                                  vertical: 0,
-                                  horizontal: 10,
-                                ),
-                                child: PopupMenuButton(
-                                  icon: Icon(Icons.more_vert),
-                                  itemBuilder: (context) => [
-                                    PopupMenuItem(
-                                      child: ListTile(
-                                        title: Text('Remover'),
-                                        onTap: () {
-                                          Navigator.pop(context);
-                                          Provider.of<FavoritesRepository>(
-                                            context,
-                                            listen: false,
-                                          ).remove(favorites.list[index]);
-                                        },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Image.network(
+                                        favorites.list[index].img,
                                       ),
-                                    )
-                                  ],
+                                      Column(
+                                        children: [
+                                          Text(
+                                            favorites.list[index].name,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      PopupMenuButton(
+                                        icon: Icon(Icons.more_vert),
+                                        itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            child: ListTile(
+                                              title: Text('Remover'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                Provider.of<
+                                                    FavoritesRepository>(
+                                                  context,
+                                                  listen: false,
+                                                ).remove(favorites.list[index]);
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              onTap: () {
-                                showDetails(favorites.list[index]);
-                              },
-                            ),
-                          ],
+                              )
+                            ],
+                          ),
                         ),
                       );
                     },

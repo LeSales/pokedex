@@ -104,10 +104,14 @@ class DataSearch extends SearchDelegate<String> {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(12)),
                                         ),
-                                        leading: (result.data!.isNotEmpty)
-                                            ? Image.network(
-                                                "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png")
-                                            : Icon(Icons.search_off),
+                                        leading: Image.network(
+                                          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                          errorBuilder: (BuildContext context,
+                                              Object exception,
+                                              StackTrace? stackTrace) {
+                                            return Icon(Icons.search_off);
+                                          },
+                                        ),
                                         title: Row(
                                           children: [
                                             Text(

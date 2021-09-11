@@ -40,52 +40,64 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                 : ListView.builder(
                     itemCount: myPokemons.list.length,
                     itemBuilder: (_, index) {
-                      return Card(
-                        child: ListTile(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(12),
-                            ),
-                          ),
-                          leading: SizedBox(
-                            child: Image.network(
-                              myPokemons.list[index].img,
-                              fit: BoxFit.contain,
-                            ),
-                            height: 200,
-                          ),
-                          title: Center(
-                            child: Text(
-                              myPokemons.list[index].name,
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w600),
-                            ),
-                          ),
-                          trailing: Container(
-                            margin: EdgeInsets.only(bottom: 3),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 0, horizontal: 10),
-                            child: PopupMenuButton(
-                              icon: Icon(Icons.more_vert),
-                              itemBuilder: (context) => [
-                                PopupMenuItem(
-                                  child: ListTile(
-                                    title: Text('Remover'),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                      Provider.of<MyPokemonsRepository>(
-                                        context,
-                                        listen: false,
-                                      ).remove(myPokemons.list[index]);
-                                    },
+                      return GestureDetector(
+                        onTap: () {
+                          showDetails(myPokemons.list[index]);
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(5),
+                          child: Stack(
+                            children: <Widget>[
+                              Card(
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 0),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
-                                )
-                              ],
-                            ),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Image.network(
+                                        myPokemons.list[index].img,
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            myPokemons.list[index].name,
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      PopupMenuButton(
+                                        icon: Icon(Icons.more_vert),
+                                        itemBuilder: (context) => [
+                                          PopupMenuItem(
+                                            child: ListTile(
+                                              title: Text('Remover'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                Provider.of<
+                                                    MyPokemonsRepository>(
+                                                  context,
+                                                  listen: false,
+                                                ).remove(
+                                                    myPokemons.list[index]);
+                                              },
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
                           ),
-                          onTap: () {
-                            showDetails(myPokemons.list[index]);
-                          },
                         ),
                       );
                     },
