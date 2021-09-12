@@ -96,117 +96,137 @@ class DataSearch extends SearchDelegate<String> {
                               itemCount:
                                   result.data!["pokemon_v2_pokemon"].length,
                               itemBuilder: (context, index) {
-                                return Card(
-                                  child: Column(
-                                    children: [
-                                      ListTile(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(12)),
-                                        ),
-                                        leading: Image.network(
-                                          "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
-                                          errorBuilder: (BuildContext context,
-                                              Object exception,
-                                              StackTrace? stackTrace) {
-                                            return Icon(Icons.search_off);
-                                          },
-                                        ),
-                                        title: Row(
-                                          children: [
-                                            Text(
-                                              result.data!["pokemon_v2_pokemon"]
-                                                  [index]['name'],
+                                return GestureDetector(
+                                  onTap: () {
+                                    print("mostra pokemon");
+                                    showDetails(
+                                      poke = Pokemon(
+                                        name: result.data!["pokemon_v2_pokemon"]
+                                            [index]['name'],
+                                        id: result.data!["pokemon_v2_pokemon"]
+                                            [index]['id'],
+                                        img:
+                                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                      ),
+                                    );
+                                  },
+                                  child: Container(
+                                    margin: EdgeInsets.all(5),
+                                    child: Stack(
+                                      children: <Widget>[
+                                        Card(
+                                          elevation: 3,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 10, vertical: 0),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
                                             ),
-                                          ],
-                                        ),
-                                        trailing: Container(
-                                          margin: EdgeInsets.only(bottom: 3),
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: 0, horizontal: 10),
-                                          child: PopupMenuButton(
-                                            icon: Icon(Icons.more_vert),
-                                            itemBuilder: (context) => [
-                                              PopupMenuItem(
-                                                child: ListTile(
-                                                  title: Text('Visto'),
-                                                  onTap: () {
-                                                    Navigator.pop(context);
-                                                    sighted.saveAll(
-                                                      poke = Pokemon(
-                                                        name: result.data![
-                                                                "pokemon_v2_pokemon"]
-                                                            [index]['name'],
-                                                        id: result.data![
-                                                                "pokemon_v2_pokemon"]
-                                                            [index]['id'],
-                                                        img:
-                                                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
-                                                      ),
-                                                    );
+                                            child: Row(
+                                              children: <Widget>[
+                                                Image.network(
+                                                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                  errorBuilder: (BuildContext
+                                                          context,
+                                                      Object exception,
+                                                      StackTrace? stackTrace) {
+                                                    return Icon(
+                                                        Icons.search_off);
                                                   },
                                                 ),
-                                              ),
-                                              PopupMenuItem(
-                                                child: ListTile(
-                                                  title: Text('Favoritar'),
-                                                  onTap: () {
-                                                    Navigator.pop(context);
-                                                    favorites.saveAll(
-                                                      poke = Pokemon(
-                                                        name: result.data![
-                                                                "pokemon_v2_pokemon"]
-                                                            [index]['name'],
-                                                        id: result.data![
-                                                                "pokemon_v2_pokemon"]
-                                                            [index]['id'],
-                                                        img:
-                                                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
-                                                      ),
-                                                    );
-                                                  },
+                                                Column(
+                                                  children: <Widget>[
+                                                    Text(
+                                                      result.data![
+                                                              "pokemon_v2_pokemon"]
+                                                          [index]['name'],
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                              PopupMenuItem(
-                                                child: ListTile(
-                                                  title: Text('Gotcha!'),
-                                                  onTap: () {
-                                                    Navigator.pop(context);
-                                                    myPokemons.saveAll(
-                                                      poke = Pokemon(
-                                                        name: result.data![
-                                                                "pokemon_v2_pokemon"]
-                                                            [index]['name'],
-                                                        id: result.data![
-                                                                "pokemon_v2_pokemon"]
-                                                            [index]['id'],
-                                                        img:
-                                                            "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                Spacer(),
+                                                PopupMenuButton(
+                                                  icon: Icon(Icons.more_vert),
+                                                  itemBuilder: (context) => [
+                                                    PopupMenuItem(
+                                                      child: ListTile(
+                                                        title: Text('Visto'),
+                                                        onTap: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          sighted.saveAll(
+                                                            poke = Pokemon(
+                                                              name: result.data![
+                                                                      "pokemon_v2_pokemon"]
+                                                                  [
+                                                                  index]['name'],
+                                                              id: result.data![
+                                                                      "pokemon_v2_pokemon"]
+                                                                  [index]['id'],
+                                                              img:
+                                                                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                            ),
+                                                          );
+                                                        },
                                                       ),
-                                                    );
-                                                  },
+                                                    ),
+                                                    PopupMenuItem(
+                                                      child: ListTile(
+                                                        title:
+                                                            Text('Favoritar'),
+                                                        onTap: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          favorites.saveAll(
+                                                            poke = Pokemon(
+                                                              name: result.data![
+                                                                      "pokemon_v2_pokemon"]
+                                                                  [
+                                                                  index]['name'],
+                                                              id: result.data![
+                                                                      "pokemon_v2_pokemon"]
+                                                                  [index]['id'],
+                                                              img:
+                                                                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                    PopupMenuItem(
+                                                      child: ListTile(
+                                                        title: Text('Gotcha!'),
+                                                        onTap: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          myPokemons.saveAll(
+                                                            poke = Pokemon(
+                                                              name: result.data![
+                                                                      "pokemon_v2_pokemon"]
+                                                                  [
+                                                                  index]['name'],
+                                                              id: result.data![
+                                                                      "pokemon_v2_pokemon"]
+                                                                  [index]['id'],
+                                                              img:
+                                                                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                        onTap: () {
-                                          print("mostra pokemon");
-                                          showDetails(
-                                            poke = Pokemon(
-                                              name: result.data![
-                                                      "pokemon_v2_pokemon"]
-                                                  [index]['name'],
-                                              id: result.data![
-                                                      "pokemon_v2_pokemon"]
-                                                  [index]['id'],
-                                              img:
-                                                  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
