@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:pokedex/models/pokemon.dart';
+import 'package:pokedex/repositories/favorites_repository.dart';
+import 'package:pokedex/repositories/my_pokemons_repository.dart';
+import 'package:pokedex/repositories/sighted_repository.dart';
+import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class PokemonDetail extends StatefulWidget {
   Pokemon pokemon;
+  String? typeList;
 
-  PokemonDetail({Key? key, required this.pokemon}) : super(key: key);
+  PokemonDetail({Key? key, required this.pokemon, this.typeList})
+      : super(key: key);
 
   @override
   _PokemonDetailState createState() => _PokemonDetailState();
@@ -13,7 +19,28 @@ class PokemonDetail extends StatefulWidget {
 
 class _PokemonDetailState extends State<PokemonDetail> {
   var _controller = TextEditingController();
-  String? obs = "";
+
+  setObs(String? obs) {
+    if (widget.typeList == "favoritePokemon") {
+      widget.pokemon.obs = obs;
+      Provider.of<FavoritesRepository>(
+        context,
+        listen: false,
+      ).saveObs(widget.pokemon);
+    } else if (widget.typeList == "sightedPokemon") {
+      widget.pokemon.obs = obs;
+      Provider.of<SightedRepository>(
+        context,
+        listen: false,
+      ).saveObs(widget.pokemon);
+    } else if (widget.typeList == "myPokemon") {
+      widget.pokemon.obs = obs;
+      Provider.of<MyPokemonsRepository>(
+        context,
+        listen: false,
+      ).saveObs(widget.pokemon);
+    }
+  }
 
   bool isEditing = false;
   @override
@@ -102,7 +129,7 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                     maxLines: 3,
                                   )
                                 : Text(
-                                    obs!,
+                                    widget.pokemon.obs ?? "",
                                     maxLines: 3,
                                   ),
                             padding: EdgeInsets.all(5),
@@ -112,7 +139,8 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                   icon: Icon(Icons.save),
                                   onPressed: () {
                                     setState(() {
-                                      obs = _controller.text;
+                                      widget.pokemon.obs = _controller.text;
+                                      setObs(widget.pokemon.obs);
                                       isEditing = !isEditing;
                                     });
                                   },
@@ -121,7 +149,8 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                   icon: Icon(Icons.edit),
                                   onPressed: () {
                                     setState(() {
-                                      _controller.text = obs!;
+                                      _controller.text =
+                                          widget.pokemon.obs ?? "";
                                       isEditing = !isEditing;
                                     });
                                   },

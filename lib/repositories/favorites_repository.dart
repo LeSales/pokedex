@@ -61,6 +61,19 @@ class FavoritesRepository extends ChangeNotifier {
     notifyListeners();
   }
 
+  saveObs(Pokemon pokemon) async {
+    await db
+        .collection('users/${auth.usuario!.uid}/favorites')
+        .doc(pokemon.name)
+        .set({
+      'name': pokemon.name,
+      'id': pokemon.id,
+      'img': pokemon.img,
+      'obs': pokemon.obs,
+    });
+    notifyListeners();
+  }
+
   remove(Pokemon pokemon) async {
     await db
         .collection('users/${auth.usuario!.uid}/favorites')

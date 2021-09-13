@@ -19,6 +19,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
       MaterialPageRoute(
         builder: (_) => PokemonDetail(
           pokemon: pokemon,
+          typeList: "favoritePokemon",
         ),
       ),
     );

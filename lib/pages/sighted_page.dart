@@ -18,6 +18,7 @@ class _SightedPageState extends State<SightedPage> {
       MaterialPageRoute(
         builder: (_) => PokemonDetail(
           pokemon: pokemon,
+          typeList: "sightedPokemon",
         ),
       ),
     );
