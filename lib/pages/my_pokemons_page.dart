@@ -18,6 +18,7 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
       MaterialPageRoute(
         builder: (_) => PokemonDetail(
           pokemon: pokemon,
+          typeList: "myPokemon",
         ),
       ),
     );

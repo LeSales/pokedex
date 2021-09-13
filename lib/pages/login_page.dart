@@ -80,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontSize: 50,
                       fontWeight: FontWeight.bold,
+                      letterSpacing: 2,
                       fontFamily: 'PokemonHollow',
                       color: Colors.red[900],
                     ),
