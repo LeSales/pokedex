@@ -63,6 +63,7 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                                     children: <Widget>[
                                       Image.network(
                                         myPokemons.list[index].img,
+                                        height: 100,
                                       ),
                                       Column(
                                         children: [
