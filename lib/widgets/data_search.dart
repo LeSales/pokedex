@@ -131,12 +131,21 @@ class DataSearch extends SearchDelegate<String> {
                                               children: <Widget>[
                                                 Image.network(
                                                   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                  height: 100,
                                                   errorBuilder: (BuildContext
                                                           context,
                                                       Object exception,
                                                       StackTrace? stackTrace) {
-                                                    return Icon(
-                                                        Icons.search_off);
+                                                    return Container(
+                                                      margin:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 30,
+                                                              vertical: 25),
+                                                      child: Icon(
+                                                        Icons.search_off,
+                                                        size: 40,
+                                                      ),
+                                                    );
                                                   },
                                                 ),
                                                 Column(

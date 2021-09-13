@@ -64,6 +64,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                                     children: <Widget>[
                                       Image.network(
                                         favorites.list[index].img,
+                                        height: 100,
                                       ),
                                       Column(
                                         children: [

@@ -62,6 +62,7 @@ class _SightedPageState extends State<SightedPage> {
                                   children: <Widget>[
                                     Image.network(
                                       sighted.list[index].img,
+                                      height: 100,
                                     ),
                                     Column(
                                       children: [

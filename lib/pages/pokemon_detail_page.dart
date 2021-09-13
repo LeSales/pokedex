@@ -113,7 +113,6 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                   onPressed: () {
                                     setState(() {
                                       obs = _controller.text;
-                                      print(isEditing);
                                       isEditing = !isEditing;
                                     });
                                   },
@@ -123,7 +122,6 @@ class _PokemonDetailState extends State<PokemonDetail> {
                                   onPressed: () {
                                     setState(() {
                                       _controller.text = obs!;
-                                      print(isEditing);
                                       isEditing = !isEditing;
                                     });
                                   },
