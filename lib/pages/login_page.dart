@@ -78,9 +78,10 @@ class _LoginPageState extends State<LoginPage> {
                   Text(
                     "Pokédex",
                     style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 50,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: -1.5,
+                      fontFamily: 'PokemonHollow',
+                      color: Colors.red[900],
                     ),
                   ),
                   Text(
@@ -88,7 +89,6 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(
                       fontSize: 35,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: -1.5,
                     ),
                   ),
                   Padding(
