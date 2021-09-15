@@ -47,6 +47,8 @@ class DataSearch extends SearchDelegate<String> {
     myPokemons = context.watch<MyPokemonsRepository>();
     sighted = context.watch<SightedRepository>();
 
+    List<QueryResult> types;
+
     showDetails(Pokemon pokemon) {
       Navigator.push(
         context,
@@ -56,6 +58,12 @@ class DataSearch extends SearchDelegate<String> {
           ),
         ),
       );
+    }
+
+    showTypes(List<QueryResult>? types) {
+      types!.forEach((element) {
+        Text(element.data!["pokemon_v2_type"]["name"]);
+      });
     }
 
     return Query(
@@ -107,6 +115,8 @@ class DataSearch extends SearchDelegate<String> {
                                             [index]['id'],
                                         img:
                                             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                        type: result.data!["pokemon_v2_pokemon"]
+                                            [index]['pokemon_v2_pokemontypes'],
                                       ),
                                     );
                                   },
@@ -149,12 +159,22 @@ class DataSearch extends SearchDelegate<String> {
                                                   },
                                                 ),
                                                 Column(
-                                                  children: <Widget>[
+                                                  children: [
                                                     Text(
                                                       result.data![
                                                               "pokemon_v2_pokemon"]
                                                           [index]['name'],
                                                     ),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        Text(result.data![
+                                                                        "pokemon_v2_pokemon"]
+                                                                    [index][
+                                                                'pokemon_v2_pokemontypes'][0]
+                                                            [
+                                                            "pokemon_v2_type"]['name'])
+                                                      ],
+                                                    )
                                                   ],
                                                 ),
                                                 Spacer(),
@@ -178,6 +198,10 @@ class DataSearch extends SearchDelegate<String> {
                                                                   [index]['id'],
                                                               img:
                                                                   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                              type: result.data![
+                                                                          "pokemon_v2_pokemon"]
+                                                                      [index][
+                                                                  'pokemon_v2_pokemontypes'],
                                                             ),
                                                           );
                                                         },
@@ -201,6 +225,10 @@ class DataSearch extends SearchDelegate<String> {
                                                                   [index]['id'],
                                                               img:
                                                                   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                              type: result.data![
+                                                                          "pokemon_v2_pokemon"]
+                                                                      [index][
+                                                                  'pokemon_v2_pokemontypes'],
                                                             ),
                                                           );
                                                         },
@@ -223,6 +251,10 @@ class DataSearch extends SearchDelegate<String> {
                                                                   [index]['id'],
                                                               img:
                                                                   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
+                                                              type: result.data![
+                                                                          "pokemon_v2_pokemon"]
+                                                                      [index][
+                                                                  'pokemon_v2_pokemontypes'],
                                                             ),
                                                           );
                                                         },
