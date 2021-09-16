@@ -60,12 +60,6 @@ class DataSearch extends SearchDelegate<String> {
       );
     }
 
-    showTypes(List<QueryResult>? types) {
-      types!.forEach((element) {
-        Text(element.data!["pokemon_v2_type"]["name"]);
-      });
-    }
-
     return Query(
         options: QueryOptions(
           document: gql(queries.searchByName(query)),
@@ -115,8 +109,8 @@ class DataSearch extends SearchDelegate<String> {
                                             [index]['id'],
                                         img:
                                             "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
-                                        type: result.data!["pokemon_v2_pokemon"]
-                                            [index]['pokemon_v2_pokemontypes'],
+                                        /*  type: result.data!["pokemon_v2_pokemon"]
+                                            [index]['pokemon_v2_pokemontypes'], */
                                       ),
                                     );
                                   },
@@ -165,16 +159,6 @@ class DataSearch extends SearchDelegate<String> {
                                                               "pokemon_v2_pokemon"]
                                                           [index]['name'],
                                                     ),
-                                                    Row(
-                                                      children: <Widget>[
-                                                        Text(result.data![
-                                                                        "pokemon_v2_pokemon"]
-                                                                    [index][
-                                                                'pokemon_v2_pokemontypes'][0]
-                                                            [
-                                                            "pokemon_v2_type"]['name'])
-                                                      ],
-                                                    )
                                                   ],
                                                 ),
                                                 Spacer(),
@@ -198,10 +182,10 @@ class DataSearch extends SearchDelegate<String> {
                                                                   [index]['id'],
                                                               img:
                                                                   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
-                                                              type: result.data![
+                                                              /* type: result.data![
                                                                           "pokemon_v2_pokemon"]
                                                                       [index][
-                                                                  'pokemon_v2_pokemontypes'],
+                                                                  'pokemon_v2_pokemontypes'], */
                                                             ),
                                                           );
                                                         },
@@ -225,10 +209,10 @@ class DataSearch extends SearchDelegate<String> {
                                                                   [index]['id'],
                                                               img:
                                                                   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
-                                                              type: result.data![
+                                                              /*  type: result.data![
                                                                           "pokemon_v2_pokemon"]
                                                                       [index][
-                                                                  'pokemon_v2_pokemontypes'],
+                                                                  'pokemon_v2_pokemontypes'], */
                                                             ),
                                                           );
                                                         },
@@ -251,10 +235,10 @@ class DataSearch extends SearchDelegate<String> {
                                                                   [index]['id'],
                                                               img:
                                                                   "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${result.data!["pokemon_v2_pokemon"][index]['id']}.png",
-                                                              type: result.data![
+                                                              /* type: result.data![
                                                                           "pokemon_v2_pokemon"]
                                                                       [index][
-                                                                  'pokemon_v2_pokemontypes'],
+                                                                  'pokemon_v2_pokemontypes'], */
                                                             ),
                                                           );
                                                         },

@@ -33,7 +33,7 @@ class SightedRepository extends ChangeNotifier {
           name: doc.get('name'),
           id: doc.get('id'),
           img: doc.get('img'),
-          type: doc.get('type'),
+          //type: doc.get('type'),
           obs: doc.get('obs'),
         );
         _list.add(pokemon);

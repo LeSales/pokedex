@@ -3,13 +3,21 @@ class Pokemon {
   int id;
   String img;
   String? obs;
-  List<Object> type;
+  //List<Type> type;
 
   Pokemon({
     required this.name,
     required this.id,
     required this.img,
-    required this.type,
+    // required this.type,
     this.obs,
+  });
+}
+
+class Type {
+  String name;
+
+  Type({
+    required this.name,
   });
 }
