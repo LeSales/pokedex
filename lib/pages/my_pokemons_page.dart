@@ -24,6 +24,8 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
     );
   }
 
+  showPokemonTypes(Pokemon pokemon) {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,6 +74,9 @@ class _MyPokemonsPageState extends State<MyPokemonsPage> {
                                             myPokemons.list[index].name,
                                             style: TextStyle(fontSize: 18),
                                           ),
+                                          Row(
+                                            children: [],
+                                          )
                                         ],
                                       ),
                                       Spacer(),
